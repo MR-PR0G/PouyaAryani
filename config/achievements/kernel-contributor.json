@@ -1,0 +1,16 @@
+{
+  "image": "https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&w=600&q=80",
+  "badge": {
+    "en": "Open Source",
+    "fa": "متن‌باز"
+  },
+  "title": {
+    "en": "Linux Kernel Contributor",
+    "fa": "مشارکت‌کننده هسته لینوکس"
+  },
+  "desc": {
+    "en": "Merged upstream patches optimizing memory allocation profiles and eBPF tracing routines.",
+    "fa": "ادغام پچ‌های اختصاصی لایه تخصیص حافظه و روتین‌های ردگیری eBPF در لینوکس."
+  },
+  "date": "2025"
+}

@@ -1,0 +1,32 @@
+{
+  "tag": {
+    "en": "SYSTEMS & FULL-STACK ENGINEER",
+    "fa": "مهندس سیستم و فول‌استک"
+  },
+  "names": {
+    "en": ["POUYA ARYANI", "MR PROG"],
+    "fa": ["پویا آریانی", "مستر پروگ"]
+  },
+  "subtitles": {
+    "en": [
+      "Software Engineer",
+      "Linux Enthusiast",
+      "Backend Engineer",
+      "Frontend Engineer",
+      "Rust Developer",
+      "C/C++ Developer",
+      "Python Developer",
+      "Open Source Developer"
+    ],
+    "fa": [
+      "مهندس نرم‌افزار",
+      "علاقه‌مند به لینوکس",
+      "مهندس بک‌اند",
+      "مهندس فرانت‌اند",
+      "توسعه‌دهنده Rust",
+      "توسعه‌دهنده C/C++",
+      "توسعه‌دهنده Python",
+      "توسعه‌دهنده متن‌باز"
+    ]
+  }
+}

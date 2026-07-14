@@ -1,0 +1,46 @@
+{
+  "avatar": "logo.png",
+  "name": "Pouya Aryani",
+  "role": {
+    "en": "// Lorem ipsum dolor sit amet.",
+    "fa": "// لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم."
+  },
+  "bio": {
+    "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    "fa": "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است. و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می‌باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می‌طلبد."
+  },
+  "badges": {
+    "en": ["Rust", "Linux", "Distributed Systems", "Open Source"],
+    "fa": ["Rust", "Linux", "Distributed Systems", "Open Source"]
+  },
+  "stats": [
+    {
+      "target": 42,
+      "label": {
+        "en": "Projects Shipped",
+        "fa": "پروژه تحویل‌شده"
+      }
+    },
+    {
+      "target": 6,
+      "label": {
+        "en": "Years Experience",
+        "fa": "سال تجربه"
+      }
+    },
+    {
+      "target": 3200,
+      "label": {
+        "en": "GitHub Contributions",
+        "fa": "مشارکت گیت‌هاب"
+      }
+    },
+    {
+      "target": 18,
+      "label": {
+        "en": "Technologies",
+        "fa": "تکنولوژی"
+      }
+    }
+  ]
+}

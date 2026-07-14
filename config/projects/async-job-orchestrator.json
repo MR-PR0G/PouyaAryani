@@ -1,0 +1,17 @@
+{
+  "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
+  "tag": {
+    "en": "Systems",
+    "fa": "سیستم‌ها"
+  },
+  "title": {
+    "en": "Async Job Orchestrator",
+    "fa": "ارکستریتور غیرهمزمان وظایف"
+  },
+  "desc": {
+    "en": "A Tokio-based distributed job queue with backpressure-aware scheduling and at-least-once delivery guarantees.",
+    "fa": "صف توزیع‌شده وظایف مبتنی بر Tokio با زمان‌بندی هوشمند و تضمین تحویل حداقل یک‌باره."
+  },
+  "stack": ["Rust", "Tokio", "Redis"],
+  "link": "https://github.com/MR-PR0G"
+}

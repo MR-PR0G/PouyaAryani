@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pouya Aryani — Backend & Systems Engineer</title>
+<meta name="description" content="Pouya Aryani — Rust developer, backend engineer, Linux enthusiast, open source contributor. Portfolio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/header.css">
+<link rel="stylesheet" href="css/classic.css" id="classicStylesheet" disabled>
+</head>
+<body>
+
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+<nav class="nav">
+  <div class="nav-dropdown-wrapper">
+    <div class="nav-section-selector">
+      <button class="nav-arrow-btn" id="navPrevBtn" aria-label="Previous Section">
+        <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span id="currentSectionLabel" data-i18n="nav.home">Home</span>
+      <button class="nav-arrow-btn" id="navNextBtn" aria-label="Next Section">
+        <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </div>
+    <ul class="nav-dropdown-menu" id="navDropdownMenu">
+      <li><a href="#home" class="active" data-i18n="nav.home">Home</a></li>
+      <li><a href="#about" data-i18n="nav.about">About</a></li>
+      <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+      <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
+      <li><a href="#achievements" data-i18n="nav.achievements">Achievements</a></li>
+      <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+    </ul>
+  </div>
+
+  <div class="nav-logo-center">
+    <div class="logo-circle">
+      <img src="logo.png" alt="Brand Logo" id="brandLogo">
+    </div>
+  </div>
+
+  <div class="nav-right">
+    <div class="nav-settings-wrapper" id="settingsWrapper">
+      <button class="nav-settings-btn" id="settingsBtn" aria-label="Settings" title="Settings">
+        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      </button>
+      <div class="settings-dropdown-menu" id="settingsDropdownMenu">
+        <div class="mode-switch-row">
+          <button class="mode-btn active" id="modeDefaultBtn">Modern</button>
+          <button class="mode-btn" id="modeClassicBtn">Classic</button>
+        </div>
+        <div class="settings-menu-divider"></div>
+        <div class="theme-dots-row">
+          <button class="theme-dot active" data-theme="dark" title="Dark Neon" aria-label="Dark theme"></button>
+          <button class="theme-dot" data-theme="light" title="Glass Light" aria-label="Light theme"></button>
+          <button class="theme-dot" data-theme="sunrise" title="Sunrise Glow" aria-label="Sunrise theme"></button>
+        </div>
+        <div class="settings-menu-divider"></div>
+        <div class="lang-switch-row">
+          <span class="flag-icon active" data-lang="en" title="English">🇺🇸</span>
+          <span class="flag-icon" data-lang="fa" title="Persian">🇮🇷</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-vignette"></div>
+  <div class="hero-inner" id="heroInner">
+    <div class="hero-tag" data-i18n="hero.tag">SYSTEMS &amp; BACKEND ENGINEER</div>
+    <div class="h1-wrap">
+      <h1 class="hero-name" id="heroName"></h1>
+    </div>
+    <div class="hero-subtitle" id="heroSubtitle" data-i18n="hero.subtitle">Rust Developer</div>
+  </div>
+  <div class="scroll-hint"><span data-i18n="hero.scroll">Scroll</span><span class="line"></span></div>
+</section>
+
+<section class="section" id="about">
+  <div class="container">
+    <div class="section-eyebrow" data-i18n="about.eyebrow">Who I am</div>
+    <h2 class="section-title reveal" style="margin-bottom:24px;" data-i18n="about.title">About</h2>
+    <div class="about-grid">
+      <div class="about-card glass reveal">
+        <div class="avatar-frame"><div class="inner">PA</div></div>
+        <h3>Pouya Aryani</h3>
+        <div class="role-line" data-i18n="about.role">// Backend &amp; Systems Engineer, Rust-first</div>
+        <p data-i18n="about.bio">I build fast, dependable backend systems — mostly in Rust, occasionally in Go — and I keep a foot firmly in Linux internals. I care about correctness, low-level performance, and software that stays out of the user's way. When I'm not shipping services, I'm contributing to open source or tinkering with Wayland compositors.</p>
+        <div class="about-badges">
+          <span data-i18n="about.badge1">Rust</span>
+          <span data-i18n="about.badge2">Linux</span>
+          <span data-i18n="about.badge3">Distributed Systems</span>
+          <span data-i18n="about.badge4">Open Source</span>
+        </div>
+      </div>
+      <div class="stats-row" id="statsRow">
+        <div class="stat-card glass reveal">
+          <div class="stat-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+          <span class="num" data-target="42">0</span><span class="label" data-i18n="about.stat1">Projects Shipped</span>
+        </div>
+        <div class="stat-card glass reveal">
+          <div class="stat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 3.2"/></svg></div>
+          <span class="num" data-target="6">0</span><span class="label" data-i18n="about.stat2">Years Experience</span>
+        </div>
+        <div class="stat-card glass reveal">
+          <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M6 3v12a3 3 0 0 0 3 3h9"/><circle cx="6" cy="3" r="2.2"/><circle cx="18" cy="18" r="2.2"/><circle cx="18" cy="9" r="2.2"/></svg></div>
+          <span class="num" data-target="3200">0</span><span class="label" data-i18n="about.stat3">GitHub Contributions</span>
+        </div>
+        <div class="stat-card glass reveal">
+          <div class="stat-icon"><svg viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg></div>
+          <span class="num" data-target="18">0</span><span class="label" data-i18n="about.stat4">Technologies</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="projects">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-eyebrow" data-i18n="projects.eyebrow">Selected work</div>
+        <h2 class="section-title reveal" data-i18n="projects.title">Projects</h2>
+      </div>
+      <div class="projects-controls">
+        <button class="projects-btn" id="projectsPrevBtn" aria-label="Previous Projects">
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        </button>
+        <button class="projects-btn" id="projectsNextBtn" aria-label="Next Projects">
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </div>
+    </div>
+    <div class="projects-filter-row" id="projectsFilterRow"></div>
+    <div class="projects-carousel-wrapper" id="projectsWrapper">
+      <div class="projects-track" id="projectsTrack"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="skills">
+  <div class="container">
+    <div class="section-eyebrow" data-i18n="skills.eyebrow">Toolbox</div>
+    <h2 class="section-title reveal" style="margin-bottom:24px;" data-i18n="skills.title">Skills</h2>
+    <div class="skills-carousel-wrapper" id="skillsWrapper">
+      <div class="skills-sections-wrap" id="skillsContainer"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="achievements">
+  <div class="container">
+    <div class="section-eyebrow" data-i18n="achievements.eyebrow">Certifications &amp; Milestones</div>
+    <h2 class="section-title reveal" style="margin-bottom:24px;" data-i18n="achievements.title">Achievements</h2>
+    
+    <div class="deck-container reveal">
+      <div class="deck-wrapper" id="deckWrapper"></div>
+      <div class="deck-controls">
+        <button class="deck-btn" id="deckPrevBtn" aria-label="Previous Achievement">
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        </button>
+        <button class="deck-btn" id="deckNextBtn" aria-label="Next Achievement">
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <div class="container">
+    <div class="contact-card glass reveal">
+      <h2 class="contact-title" data-i18n="contact.title">Let's build something reliable.</h2>
+      <p class="contact-desc" data-i18n="contact.desc">Open to backend and systems engineering roles, Rust consulting, and interesting open source collaborations.</p>
+      
+      <div class="contact-tabs-row">
+        <button class="contact-tab-btn active" data-tab="email" data-i18n="contact.emailTab">Email</button>
+        <button class="contact-tab-btn" data-tab="telegram" data-i18n="contact.telegramTab">Telegram</button>
+        <button class="contact-tab-btn" data-tab="github" data-i18n="contact.githubTab">GitHub</button>
+      </div>
+
+      <div class="contact-tab-content">
+        <div class="contact-tab-pane active" id="tab-email">
+          <form id="contactForm" class="contact-form">
+            <div class="form-row">
+              <input type="email" id="formSenderEmail" class="form-input" placeholder="Your Email" required />
+              <input type="text" id="formSubject" class="form-input" placeholder="Subject" required />
+            </div>
+            <textarea id="formMessage" class="form-input form-textarea" rows="4" placeholder="Your Message..." required></textarea>
+            <button type="submit" class="btn btn-primary" data-i18n="contact.email">Email Me</button>
+          </form>
+        </div>
+
+        <div class="contact-tab-pane" id="tab-telegram">
+          <div class="telegram-tab-wrapper">
+            <p class="telegram-desc" data-i18n="contact.telegramDesc">Join my Telegram channel for software updates, Rust snippets, and tech thoughts.</p>
+            <div class="telegram-actions">
+              <a class="btn btn-primary" id="telegramChannelBtn" href="https://t.me/MR_PR0G" target="_blank" rel="noopener" data-i18n="contact.telegramChannelBtn">Telegram Channel</a>
+              <a class="btn btn-primary" id="telegramChatBtn" href="https://t.me/MR_PR0G" target="_blank" rel="noopener" data-i18n="contact.telegramChatBtn">Chat with me</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-tab-pane" id="tab-github">
+          <div class="github-tab-wrapper">
+            <div class="github-actions">
+              <a class="btn btn-primary" id="githubFollowBtn" href="https://github.com/MR-PR0G" target="_blank" rel="noopener" data-i18n="contact.githubFollow">Follow on GitHub</a>
+              <a class="btn btn-primary" id="githubReposBtn" href="https://github.com/MR-PR0G?tab=repositories" target="_blank" rel="noopener" data-i18n="contact.githubRepos">View Repositories</a>
+            </div>
+            <div class="github-graph-container">
+              <img id="githubGraphImg" src="https://ghchart.rshah.org/4fd8e8/MR-PR0G" alt="GitHub Contributions Graph" loading="lazy" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer data-i18n="footer">© 2026 Pouya Aryani — built with Rust-brained obsession over detail.</footer>
+
+<div id="secretSection" class="secret-section">
+  <div class="secret-content">
+    <span class="secret-title" data-i18n="secret.score">Score</span>
+    <span class="secret-score">0</span>
+    <span class="secret-hint" id="secretHint" data-i18n="secret.hint"></span>
+  </div>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

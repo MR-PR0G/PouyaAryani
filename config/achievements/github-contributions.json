@@ -1,0 +1,16 @@
+{
+  "image": "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&w=600&q=80",
+  "badge": {
+    "en": "Milestone",
+    "fa": "دستاورد"
+  },
+  "title": {
+    "en": "3,000+ GitHub Contributions",
+    "fa": "بیش از ۳,۰۰۰ مشارکت در گیت‌هاب"
+  },
+  "desc": {
+    "en": "Maintained multiple active Rust libraries and contributed to core ecosystem tools.",
+    "fa": "توسعه و نگهداری کتابخانه‌های فعال Rust و مشارکت در ابزارهای اصلی اکوسیستم."
+  },
+  "date": "2024 - 2026"
+}
