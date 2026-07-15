@@ -11,12 +11,12 @@
   align-items: center;
   justify-content: space-between;
   padding: 14px 28px;
-  background: var(--surface) !important;
+  background: rgba(10, 14, 26, 0.75) !important;
   border: 1px solid var(--border) !important;
   border-radius: 24px;
   backdrop-filter: blur(20px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-  box-shadow: 0 8px 32px rgba(79, 216, 232, 0.28), 0 2px 10px var(--glow-color) !important;
+  box-shadow: 0 4px 14px rgba(0, 212, 255, 0.12) !important;
   transition: background-color .4s var(--ease), border-color .4s var(--ease), box-shadow .4s var(--ease);
   direction: ltr !important;
 }
@@ -116,11 +116,11 @@
   left: 0;
   margin-top: 6px;
   width: 170px;
-  background: var(--surface) !important;
+  background: rgba(10, 14, 26, 0.95) !important;
   border: 1px solid var(--border) !important;
   border-radius: 16px;
-  backdrop-filter: blur(24px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
   padding: 6px 0;
   box-shadow: var(--shadow-soft);
   opacity: 0;
@@ -129,7 +129,6 @@
   transition: opacity 0.25s var(--ease), transform 0.25s var(--ease), visibility 0.25s;
   list-style: none;
   z-index: 600;
-  overflow: hidden;
 }
 
 .nav-dropdown-wrapper:hover .nav-dropdown-menu,
@@ -198,11 +197,11 @@
   right: 0;
   margin-top: 10px;
   width: 150px;
-  background: var(--surface) !important;
+  background: rgba(10, 14, 26, 0.95) !important;
   border: 1px solid var(--border) !important;
   border-radius: 16px;
-  backdrop-filter: blur(24px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
   padding: 10px 8px;
   box-shadow: var(--shadow-soft);
   opacity: 0;
@@ -337,7 +336,15 @@
 }
 
 html[data-theme="light"] .nav {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+  background: rgba(245, 247, 250, 0.75) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05) !important;
+}
+
+html[data-theme="light"] .nav-dropdown-menu,
+html[data-theme="light"] .settings-dropdown-menu {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border-color: rgba(20, 25, 40, 0.15) !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
 }
 
 html[data-theme="light"] .nav-section-selector {
@@ -352,13 +359,6 @@ html[data-theme="light"] .nav-arrow-btn {
 html[data-theme="light"] .nav-arrow-btn:hover {
   color: var(--cyan);
   background: rgba(0, 0, 0, 0.06);
-}
-
-html[data-theme="light"] .nav-dropdown-menu,
-html[data-theme="light"] .settings-dropdown-menu {
-  background: rgba(255, 255, 255, 0.92) !important;
-  border-color: rgba(20, 25, 40, 0.15) !important;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
 }
 
 html[data-theme="light"] .nav-dropdown-menu li a {
@@ -376,7 +376,29 @@ html[data-theme="light"] .nav-dropdown-menu li a.active {
 }
 
 html[data-theme="sunrise"] .nav {
-  box-shadow: 0 4px 22px rgba(245, 158, 11, 0.2) !important;
+  background: rgba(20, 16, 10, 0.75) !important;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.15) !important;
+}
+
+html[data-theme="sunrise"] .nav-dropdown-menu,
+html[data-theme="sunrise"] .settings-dropdown-menu {
+  background: rgba(26, 21, 12, 0.96) !important;
+}
+
+@media (max-width: 768px) {
+  .nav-section-selector span {
+    max-width: 52px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .nav-dropdown-menu,
+  .settings-dropdown-menu {
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  }
 }
 
 @media (max-width: 480px) {
@@ -403,7 +425,7 @@ html[data-theme="sunrise"] .nav {
     padding: 3px 6px;
   }
   .nav-section-selector span {
-    min-width: 52px;
+    min-width: 48px;
     font-size: 0.76rem;
   }
 }

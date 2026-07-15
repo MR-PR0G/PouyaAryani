@@ -1,0 +1,16 @@
+{
+  "image": "config/achievements/advancerobotic.jpg",
+  "badge": {
+    "en": "Certification",
+    "fa": "گواهی‌نامه"
+  },
+  "title": {
+    "en": "Advanced Robotics",
+    "fa": "رباتیک پیشرفته"
+  },
+  "desc": {
+    "en": "Successfully completed a comprehensive 72-hour course on Advanced Robotics architecture, kinematics, and control systems from IUST.",
+    "fa": "دوره تخصصی و جامع ۷۲ ساعته رباتیک پیشرفته، مباحث سینماتیک و سیستم‌های کنترل در دانشگاه علم و صنعت ایران."
+  },
+  "date": "2022"
+}

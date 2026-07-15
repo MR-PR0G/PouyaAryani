@@ -1,0 +1,17 @@
+{
+  "image": "https://github.com/MR-PR0G/Aetherrain-SplashLoginScreen/raw/main/Demos/DemoAtherrainUi.png",
+  "tag": {
+    "en": "System",
+    "fa": "سیستم"
+  },
+  "title": {
+    "en": "AetherRain",
+    "fa": "AetherRain"
+  },
+  "desc": {
+    "en": "A lightweight, ultra-precise Matrix digital rain splash screen engine in C. Perfect full-screen boot/login hook for Niri WM, Hyprland and others.",
+    "fa": "موتور سبک و فوق‌العاده دقیق باران دیجیتالی ماتریکس به زبان C برای صفحه خوش‌آمدگویی. یک هوک تمام‌صفحه عالی برای لایه بوت و لاگین در Niri WM، Hyprland و غیره."
+  },
+  "stack": ["C", "GTK", "Cairo"],
+  "link": "https://github.com/MR-PR0G/Aetherrain-SplashLoginScreen"
+}

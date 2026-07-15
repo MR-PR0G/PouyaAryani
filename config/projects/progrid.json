@@ -1,0 +1,17 @@
+{
+  "image": "https://github.com/MR-PR0G/ProGrid/raw/main/Demos/ScreenShots.png",
+  "tag": {
+    "en": "Web",
+    "fa": "وب"
+  },
+  "title": {
+    "en": "ProGrid",
+    "fa": "ProGrid"
+  },
+  "desc": {
+    "en": "Fluid-Grid based dashboard for browsers. Modern Glassmorphism UI, modular widgets, and fully PWA-ready.",
+    "fa": "داشبورد مبتنی بر شبکه سیال برای مرورگرها. رابط کاربری مدرن گلس‌مورفیسم، ویجت‌های ماژولار و کاملاً آماده برای PWA."
+  },
+  "stack": ["JS", "HTML/CSS", "PWA"],
+  "link": "https://github.com/MR-PR0G/ProGrid"
+}

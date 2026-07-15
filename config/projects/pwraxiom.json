@@ -1,0 +1,17 @@
+{
+  "image": "https://github.com/MR-PR0G/PwrAxiom/raw/main/Demos/1.png",
+  "tag": {
+    "en": "System",
+    "fa": "سیستم"
+  },
+  "title": {
+    "en": "Power Axiom",
+    "fa": "Power Axiom"
+  },
+  "desc": {
+    "en": "A sleek, system-level performance & power management utility for Linux, built with C and GTK4. Unleash maximum hardware performance or maximize battery life with fluid, modern Glassmorphism UI.",
+    "fa": "یک ابزار روان و سیستمی برای مدیریت مصرف انرژی و عملکرد سخت‌افزار در لینوکس، توسعه یافته با GTK4. آزادسازی حداکثر قدرت سخت‌افزار یا بهبود عمر باتری با رابط کاربری مدرن گلس‌مورفیسم."
+  },
+  "stack": ["Rust", "GTK4", "Linux"],
+  "link": "https://github.com/MR-PR0G/PwrAxiom"
+}

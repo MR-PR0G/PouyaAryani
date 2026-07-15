@@ -1,4 +1,8 @@
-[
-  "async-job-orchestrator.json",
-  "actix-microservice.json"
-]
+{
+  "files": [
+    "progrid.json",
+    "aetherrain.json",
+    "telegram-cloner.json",
+    "pwraxiom.json"
+  ]
+}

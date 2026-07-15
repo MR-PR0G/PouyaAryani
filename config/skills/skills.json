@@ -5,9 +5,9 @@
       "fa": "سیستم و سطح پایین"
     },
     "skills": [
-      { "name": "Rust", "level": 95 },
-      { "name": "C / C++", "level": 85 },
-      { "name": "Linux Internals", "level": 90 },
+      { "name": "Rust", "level": 65 },
+      { "name": "C / C++", "level": 75 },
+      { "name": "Linux Internals", "level": 80 },
       { "name": "Wayland Compositors", "level": 80 }
     ]
   },
@@ -17,10 +17,10 @@
       "fa": "بک‌اند و سیستم‌های توزیع‌شده"
     },
     "skills": [
-      { "name": "Tokio / Async", "level": 92 },
-      { "name": "Actix Web / Rocket", "level": 88 },
-      { "name": "gRPC & Protocol Buffers", "level": 85 },
-      { "name": "PostgreSQL & Redis", "level": 88 }
+      { "name": "Tokio / Async", "level": 45 },
+      { "name": "Actix Web / Rocket", "level": 50 },
+      { "name": "gRPC & Protocol Buffers", "level": 40 },
+      { "name": "PostgreSQL & Redis", "level": 60 }
     ]
   },
   {
@@ -29,10 +29,10 @@
       "fa": "دوآپس و ابزارها"
     },
     "skills": [
-      { "name": "Docker & Containers", "level": 85 },
-      { "name": "eBPF Tracing", "level": 78 },
+      { "name": "Docker & Containers", "level": 75 },
+      { "name": "eBPF Tracing", "level": 44 },
       { "name": "Git & Version Control", "level": 92 },
-      { "name": "CI / CD Pipelines", "level": 82 }
+      { "name": "CI / CD Pipelines", "level": 67 }
     ]
   }
 ]

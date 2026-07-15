@@ -1,34 +1,26 @@
 import { getLanguage } from './i18n.js';
-import { loadAchievementsConfig } from './configLoader.js';
 
 const FALLBACK_ACHIEVEMENTS = [
   {
-    image: "https://images.unsplash.com/photo-1589330694653-ded6df03f754?auto=format&fit=crop&w=600&q=80",
+    image: "config/achievements/advancerobotic.jpg",
     badge: { en: "Certification", fa: "گواهی‌نامه" },
-    title: { en: "Rust Systems Architect Certification", fa: "گواهی‌نامه معماری سیستم‌های Rust" },
-    desc: { en: "Demonstrated advanced knowledge in memory safety, concurrency patterns, and low-level FFIs.", fa: "اثبات دانش پیشرفته در ایمنی حافظه، الگوهای همزمانی و ارتباطات سطح پایین FFI." },
-    date: "2025"
+    title: { en: "Advanced Robotics", fa: "رباتیک پیشرفته" },
+    desc: { en: "Successfully completed a comprehensive 72-hour course on Advanced Robotics architecture, kinematics, and control systems from IUST.", fa: "دوره تخصصی و جامع ۷۲ ساعته رباتیک پیشرفته، مباحث سینماتیک و سیستم‌های کنترل در دانشگاه علم و صنعت ایران." },
+    date: "2022"
   },
   {
-    image: "https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&w=600&q=80",
-    badge: { en: "Open Source", fa: "متن‌باز" },
-    title: { en: "Linux Kernel Contributor", fa: "مشارکت‌کننده هسته لینوکس" },
-    desc: { en: "Merged upstream patches optimizing memory allocation profiles and eBPF tracing routines.", fa: "ادغام پچ‌های اختصاصی لایه تخصیص حافظه و روتین‌های ردگیری eBPF در لینوکس." },
-    date: "2025"
+    image: "config/achievements/machinlearning.jpg",
+    badge: { en: "Certification", fa: "گواهی‌نامه" },
+    title: { en: "Machine Learning", fa: "یادگیری ماشین" },
+    desc: { en: "Successfully completed a 24-hour training on Machine Learning fundamentals, algorithm training, and predictive modeling.", fa: "دوره تخصصی ۲۴ ساعته یادگیری ماشین، مفاهیم پایه، آموزش الگوریتم‌ها و مدل‌سازی پیش‌بینی." },
+    date: "2022"
   },
   {
-    image: "https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?auto=format&fit=crop&w=600&q=80",
-    badge: { en: "Competition", fa: "رقابت" },
-    title: { en: "1st Place Systems Hackathon", fa: "مقام اول هکاتون سیستم‌ها" },
-    desc: { en: "Built a sub-millisecond high-throughput consensus engine under 24 hours.", fa: "طراحی و پیاده‌سازی موتور اجماع پرسرعت با توان پردازش بالا در کمتر از ۲۴ ساعت." },
-    date: "2024"
-  },
-  {
-    image: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&w=600&q=80",
-    badge: { en: "Milestone", fa: "دستاورد" },
-    title: { en: "3,000+ GitHub Contributions", fa: "بیش از ۳,۰۰۰ مشارکت در گیت‌هاب" },
-    desc: { en: "Maintained multiple active Rust libraries and contributed to core ecosystem tools.", fa: "توسعه و نگهداری کتابخانه‌های فعال Rust و مشارکت در ابزارهای اصلی اکوسیستم." },
-    date: "2024 - 2026"
+    image: "config/achievements/solidworks.jpg",
+    badge: { en: "Certification", fa: "گواهی‌نامه" },
+    title: { en: "Advanced SolidWorks", fa: "سالیدورکس پیشرفته" },
+    desc: { en: "Completed a 24-hour advanced CAD modeling and parametric design course in SolidWorks.", fa: "دوره تخصصی ۲۴ ساعته طراحی پارامتریک و مدل‌سازی سه بعدی پیشرفته با سالیدورکس." },
+    date: "2022"
   }
 ];
 
@@ -36,8 +28,33 @@ export async function initAchievements() {
   const deckWrapper = document.getElementById('deckWrapper');
   if (!deckWrapper) return;
 
-  const fetchedAchievements = await loadAchievementsConfig();
-  const achievementsData = (fetchedAchievements && fetchedAchievements.length > 0) ? fetchedAchievements : FALLBACK_ACHIEVEMENTS;
+  let achievementsData = [];
+
+  try {
+    const manifestResponse = await fetch('config/achievements/mainfest.json');
+    if (manifestResponse.ok) {
+      const manifest = await manifestResponse.json();
+      if (manifest && manifest.files) {
+        const promises = manifest.files.map(async (file) => {
+          try {
+            const res = await fetch(`config/achievements/${file}`);
+            if (res.ok) return await res.json();
+          } catch (err) {
+            return null;
+          }
+          return null;
+        });
+        const results = await Promise.all(promises);
+        achievementsData = results.filter(item => item !== null);
+      }
+    }
+  } catch (e) {
+    achievementsData = [];
+  }
+
+  if (!achievementsData || achievementsData.length === 0) {
+    achievementsData = FALLBACK_ACHIEVEMENTS;
+  }
 
   let activeCardIndex = 0;
   let cardElements = [];

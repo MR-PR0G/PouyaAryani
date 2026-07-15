@@ -1,42 +1,42 @@
 {
-  "avatar": "logo.png",
+  "avatar": "profile.jpg",
   "name": "Pouya Aryani",
   "role": {
-    "en": "// Lorem ipsum dolor sit amet.",
-    "fa": "// لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم."
+    "en": "// Full-Stack & Systems Engineer",
+    "fa": "// مهندس فول‌استک و سیستم"
   },
   "bio": {
-    "en": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-    "fa": "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است. و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می‌باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می‌طلبد."
+    "en": "I bridge the gap between high-performance low-level programming and modern full-stack web development. Expert in crafting fluid UI/UX designs, glassmorphism aesthetics, and scalable architectures primarily using Rust, Python, and C/GTK4. From browser-based modular dashboards and PWAs to resilient automation tools and Linux system utilities, I engineer complete, optimized, and visually striking end-to-end solutions.",
+    "fa": "من مرز میان برنامه‌نویسی سطح پایین با کارایی بالا و توسعه وب فول‌استک مدرن را هموار می‌کنم. تخصص ویژه من در طراحی رابط‌های کاربری شیشه‌ای (Glassmorphic) و فرانت‌اندهای واکنش‌گرا در کنار معماری ابزارهای سیستمی و بک‌اندهای پایدار با استفاده از Rust، پایتون و C/GTK4 است؛ از داشبوردهای مرورگر ماژولار و PWA گرفته تا بات‌های اتوماسیون پرقدرت و ابزارهای سیستمی لینوکس."
   },
   "badges": {
-    "en": ["Rust", "Linux", "Distributed Systems", "Open Source"],
-    "fa": ["Rust", "Linux", "Distributed Systems", "Open Source"]
+    "en": ["Full-Stack Dev", "UI/UX Design", "Rust / Python", "Linux Systems"],
+    "fa": ["توسعه فول‌استک", "طراحی UI/UX", "Rust / پایتون", "سیستم‌های لینوکس"]
   },
   "stats": [
     {
-      "target": 42,
+      "target": 10,
       "label": {
         "en": "Projects Shipped",
         "fa": "پروژه تحویل‌شده"
       }
     },
     {
-      "target": 6,
+      "target": 3,
       "label": {
         "en": "Years Experience",
         "fa": "سال تجربه"
       }
     },
     {
-      "target": 3200,
+      "target": 124,
       "label": {
-        "en": "GitHub Contributions",
-        "fa": "مشارکت گیت‌هاب"
+        "en": "Total Commits",
+        "fa": "تعداد کامیت‌ها"
       }
     },
     {
-      "target": 18,
+      "target": 12,
       "label": {
         "en": "Technologies",
         "fa": "تکنولوژی"

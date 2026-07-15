@@ -1,5 +1,4 @@
 import { getLanguage } from './i18n.js';
-import { loadProjectsConfig } from './configLoader.js';
 import { translations } from './translations.js';
 
 const FALLBACK_PROJECTS = [
@@ -21,6 +20,40 @@ const FALLBACK_PROJECTS = [
   }
 ];
 
+const statsCache = new Map();
+
+function parseGitHubUrl(url) {
+  if (!url) return null;
+  const match = url.match(/github\.com\/([^/]+)\/([^/]+)/);
+  if (match && match[1] && match[2]) {
+    return { owner: match[1], repo: match[2].split('?')[0].split('#')[0] };
+  }
+  return null;
+}
+
+async function fetchGitHubStats(owner, repo) {
+  const cacheKey = `${owner}/${repo}`;
+  if (statsCache.has(cacheKey)) {
+    return statsCache.get(cacheKey);
+  }
+
+  try {
+    const response = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
+    if (response.ok) {
+      const data = await response.json();
+      const stats = {
+        stars: data.stargazers_count,
+        forks: data.forks_count
+      };
+      statsCache.set(cacheKey, stats);
+      return stats;
+    }
+  } catch (e) {
+    return null;
+  }
+  return null;
+}
+
 export async function initProjects() {
   const wrapper = document.getElementById('projectsWrapper');
   const track = document.getElementById('projectsTrack');
@@ -29,8 +62,33 @@ export async function initProjects() {
   const filterRow = document.getElementById('projectsFilterRow');
   if (!track || !wrapper) return;
 
-  const fetchedProjects = await loadProjectsConfig();
-  const rawProjects = (fetchedProjects && fetchedProjects.length > 0) ? fetchedProjects : FALLBACK_PROJECTS;
+  let rawProjects = [];
+
+  try {
+    const manifestResponse = await fetch('config/projects/mainfest.json');
+    if (manifestResponse.ok) {
+      const manifest = await manifestResponse.json();
+      if (manifest && manifest.files) {
+        const promises = manifest.files.map(async (file) => {
+          try {
+            const res = await fetch(`config/projects/${file}`);
+            if (res.ok) return await res.json();
+          } catch (err) {
+            return null;
+          }
+          return null;
+        });
+        const results = await Promise.all(promises);
+        rawProjects = results.filter(item => item !== null);
+      }
+    }
+  } catch (e) {
+    rawProjects = [];
+  }
+
+  if (!rawProjects || rawProjects.length === 0) {
+    rawProjects = FALLBACK_PROJECTS;
+  }
 
   let activeFilterKey = 'all';
   let setWidth = 0;
@@ -134,11 +192,13 @@ export async function initProjects() {
 
     const displayProjects = [...baseItems, ...baseItems, ...baseItems];
 
-    displayProjects.forEach((p) => {
+    displayProjects.forEach((p, idx) => {
       const tagText = typeof p.tag === 'object' ? (p.tag[lang] || p.tag['en'] || '') : p.tag;
       const titleText = typeof p.title === 'object' ? (p.title[lang] || p.title['en'] || '') : p.title;
       const descText = typeof p.desc === 'object' ? (p.desc[lang] || p.desc['en'] || '') : p.desc;
       const stackList = p.stack || [];
+      const ghInfo = parseGitHubUrl(p.link);
+      const statsId = `gh-stats-${idx}`;
 
       const card = document.createElement('div');
       card.className = 'project-card glass reveal in';
@@ -147,7 +207,10 @@ export async function initProjects() {
         <div class="project-img-wrapper">
           <img src="${p.image}" alt="${titleText}" class="project-img" loading="lazy" />
         </div>
-        <span class="project-tag">${tagText}</span>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <span class="project-tag" style="margin-bottom: 0;">${tagText}</span>
+          <div id="${statsId}" style="display: flex; gap: 8px; font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); align-items: center;"></div>
+        </div>
         <h4>${titleText}</h4>
         <p>${descText}</p>
         <div class="project-stack">${stackList.map(s => `<span class="chip-mini">${s}</span>`).join('')}</div>
@@ -161,6 +224,24 @@ export async function initProjects() {
 
       track.appendChild(card);
 
+      if (ghInfo) {
+        fetchGitHubStats(ghInfo.owner, ghInfo.repo).then(stats => {
+          const statsContainer = document.getElementById(statsId);
+          if (stats && statsContainer) {
+            statsContainer.innerHTML = `
+              <span style="display: flex; align-items: center; gap: 3px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                ${stats.stars}
+              </span>
+              <span style="display: flex; align-items: center; gap: 3px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+                ${stats.forks}
+              </span>
+            `;
+          }
+        });
+      }
+
       const glow = card.querySelector('.project-glow');
       let rect = null;
 
@@ -169,8 +250,10 @@ export async function initProjects() {
         if (!rect) rect = card.getBoundingClientRect();
         const px = e.clientX - rect.left;
         const py = e.clientY - rect.top;
-        glow.style.left = (px - 110) + 'px';
-        glow.style.top = (py - 110) + 'px';
+        if (glow) {
+          glow.style.left = (px - 110) + 'px';
+          glow.style.top = (py - 110) + 'px';
+        }
       });
     });
 

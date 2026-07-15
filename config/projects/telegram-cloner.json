@@ -1,0 +1,17 @@
+{
+  "image": "config/projects/telegram-cloner.jpg",
+  "tag": {
+    "en": "Bot",
+    "fa": "بات"
+  },
+  "title": {
+    "en": "Telegram Channel Clone",
+    "fa": "Telegram Channel Clone"
+  },
+  "desc": {
+    "en": "An ultra-resilient, production-grade asynchronous CLI application built with Python 3.12+ and Telethon to seamlessly clone message histories from any accessible Telegram channel, group, or Saved Messages to a destination channel/group.",
+    "fa": "یک اپلیکیشن CLI ناهمگام، پایدار و در سطح پروداکشن ساخته شده با پایتون 3.12 و Telethon برای شبیه‌سازی و انتقال کامل تاریخچه پیام‌ها از هر کانال، گروه یا Saved Messages به مقصد مورد نظر."
+  },
+  "stack": ["Python", "Telethon"],
+  "link": "https://github.com/MR-PR0G/Telegram-channel-cloner"
+}

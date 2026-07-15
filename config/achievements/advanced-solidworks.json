@@ -1,0 +1,16 @@
+{
+  "image": "config/achievements/solidworks.jpg",
+  "badge": {
+    "en": "Certification",
+    "fa": "گواهی‌نامه"
+  },
+  "title": {
+    "en": "Advanced SolidWorks",
+    "fa": "سالیدورکس پیشرفته"
+  },
+  "desc": {
+    "en": "Completed a 24-hour advanced CAD modeling and parametric design course in SolidWorks.",
+    "fa": "دوره تخصصی ۲۴ ساعته طراحی پارامتریک و مدل‌سازی سه بعدی پیشرفته با سالیدورکس."
+  },
+  "date": "2022"
+}

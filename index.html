@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pouya Aryani — Backend & Systems Engineer</title>
 <meta name="description" content="Pouya Aryani — Rust developer, backend engineer, Linux enthusiast, open source contributor. Portfolio.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/header.css">
@@ -16,7 +14,6 @@
 
 <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
-<!-- ============================= NAV ============================= -->
 <nav class="nav">
   <div class="nav-dropdown-wrapper">
     <div class="nav-section-selector">
@@ -73,7 +70,6 @@
   </div>
 </nav>
 
-<!-- ============================= HERO ============================= -->
 <section class="hero" id="home">
   <div class="hero-vignette"></div>
   <div class="hero-inner" id="heroInner">
@@ -85,7 +81,6 @@
   </div>
 </section>
 
-<!-- ============================= ABOUT ============================= -->
 <section class="section" id="about">
   <div class="container">
     <div class="section-eyebrow" data-i18n="about.eyebrow">Who I am</div>
@@ -125,7 +120,6 @@
   </div>
 </section>
 
-<!-- ============================= PROJECTS ============================= -->
 <section class="section" id="projects">
   <div class="container">
     <div class="section-head">
@@ -149,7 +143,6 @@
   </div>
 </section>
 
-<!-- ============================= SKILLS ============================= -->
 <section class="section" id="skills">
   <div class="container">
     <div class="section-eyebrow" data-i18n="skills.eyebrow">Toolbox</div>
@@ -160,7 +153,6 @@
   </div>
 </section>
 
-<!-- ============================= ACHIEVEMENTS ============================= -->
 <section class="section" id="achievements">
   <div class="container">
     <div class="section-eyebrow" data-i18n="achievements.eyebrow">Certifications &amp; Milestones</div>
@@ -180,7 +172,6 @@
   </div>
 </section>
 
-<!-- ============================= CONTACT ============================= -->
 <section class="section" id="contact">
   <div class="container">
     <div class="contact-card glass reveal">
@@ -188,14 +179,13 @@
       <p class="contact-desc" data-i18n="contact.desc">Open to backend and systems engineering roles, Rust consulting, and interesting open source collaborations.</p>
       
       <div class="contact-tabs-row">
-        <button class="contact-tab-btn active" data-tab="email" data-i18n="contact.emailTab">Email</button>
+        <button class="contact-tab-btn" data-tab="email" data-i18n="contact.emailTab">Email</button>
         <button class="contact-tab-btn" data-tab="telegram" data-i18n="contact.telegramTab">Telegram</button>
         <button class="contact-tab-btn" data-tab="github" data-i18n="contact.githubTab">GitHub</button>
       </div>
 
       <div class="contact-tab-content">
-        <!-- EMAIL TAB -->
-        <div class="contact-tab-pane active" id="tab-email">
+        <div class="contact-tab-pane" id="tab-email">
           <form id="contactForm" class="contact-form">
             <div class="form-row">
               <input type="email" id="formSenderEmail" class="form-input" placeholder="Your Email" required />
@@ -206,7 +196,6 @@
           </form>
         </div>
 
-        <!-- TELEGRAM TAB -->
         <div class="contact-tab-pane" id="tab-telegram">
           <div class="telegram-tab-wrapper">
             <p class="telegram-desc" data-i18n="contact.telegramDesc">Join my Telegram channel for software updates, Rust snippets, and tech thoughts.</p>
@@ -217,15 +206,11 @@
           </div>
         </div>
 
-        <!-- GITHUB TAB -->
         <div class="contact-tab-pane" id="tab-github">
           <div class="github-tab-wrapper">
             <div class="github-actions">
               <a class="btn btn-primary" id="githubFollowBtn" href="https://github.com/MR-PR0G" target="_blank" rel="noopener" data-i18n="contact.githubFollow">Follow on GitHub</a>
               <a class="btn btn-primary" id="githubReposBtn" href="https://github.com/MR-PR0G?tab=repositories" target="_blank" rel="noopener" data-i18n="contact.githubRepos">View Repositories</a>
-            </div>
-            <div class="github-graph-container">
-              <img id="githubGraphImg" src="https://ghchart.rshah.org/4fd8e8/MR-PR0G" alt="GitHub Contributions Graph" loading="lazy" />
             </div>
           </div>
         </div>
@@ -236,7 +221,6 @@
 
 <footer data-i18n="footer">© 2026 Pouya Aryani — built with Rust-brained obsession over detail.</footer>
 
-<!-- ============================= SECRET DOOR SECTION ============================= -->
 <div id="secretSection" class="secret-section">
   <div class="secret-content">
     <span class="secret-title" data-i18n="secret.score">Score</span>

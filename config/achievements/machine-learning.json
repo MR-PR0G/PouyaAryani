@@ -1,0 +1,16 @@
+{
+  "image": "config/achievements/machinlearning.jpg",
+  "badge": {
+    "en": "Certification",
+    "fa": "گواهی‌نامه"
+  },
+  "title": {
+    "en": "Machine Learning",
+    "fa": "یادگیری ماشین"
+  },
+  "desc": {
+    "en": "Successfully completed a 24-hour training on Machine Learning fundamentals, algorithm training, and predictive modeling.",
+    "fa": "دوره تخصصی ۲۴ ساعته یادگیری ماشین، مفاهیم پایه، آموزش الگوریتم‌ها و مدل‌سازی پیش‌بینی."
+  },
+  "date": "2022"
+}
