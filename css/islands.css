@@ -49,12 +49,11 @@ html[data-nav-mode="islands"] .section,
 html[data-nav-mode="islands"] .hero {
   position: fixed !important;
   top: 14px !important;
-  bottom: calc(78px + env(safe-area-inset-bottom, 0px)) !important;
-  left: 14px !important;
-  right: 14px !important;
+  bottom: calc(90px + env(safe-area-inset-bottom, 0px)) !important;
+  left: 50% !important;
   width: calc(100% - 28px) !important;
   max-width: 672px !important;
-  margin: 0 auto !important;
+  margin: 0 !important;
   height: auto !important;
   padding: 16px 14px 10px 14px !important;
   background: rgba(10, 14, 26, 0.95) !important;
@@ -67,7 +66,7 @@ html[data-nav-mode="islands"] .hero {
   box-sizing: border-box !important;
   opacity: 0 !important;
   visibility: hidden !important;
-  transform: translate3d(100%, 0, 0) !important;
+  transform: translate3d(100vw, 0, 0) !important;
   transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease, visibility 0.25s !important;
   pointer-events: none !important;
   z-index: 100 !important;
@@ -127,7 +126,7 @@ html[data-nav-mode="islands"] .section.islands-active,
 html[data-nav-mode="islands"] .hero.islands-active {
   opacity: 1 !important;
   visibility: visible !important;
-  transform: translate3d(0, 0, 0) !important;
+  transform: translate3d(-50%, 0, 0) !important;
   pointer-events: auto !important;
   z-index: 100 !important;
 }
@@ -136,7 +135,7 @@ html[data-nav-mode="islands"] .section.islands-prev,
 html[data-nav-mode="islands"] .hero.islands-prev {
   opacity: 0 !important;
   visibility: hidden !important;
-  transform: translate3d(-100%, 0, 0) !important;
+  transform: translate3d(-200vw, 0, 0) !important;
   pointer-events: none !important;
   z-index: 50 !important;
 }
