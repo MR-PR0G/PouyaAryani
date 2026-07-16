@@ -40,6 +40,8 @@ export function initHeader() {
   let touchStartY = 0;
   let touchMoved = false;
 
+  let currentSectionId = 'home';
+
   const sections = ['home', 'about', 'projects', 'achievements', 'contact'];
   const islandsSections = ['home', 'projects', 'achievements', 'score'];
 
@@ -203,6 +205,7 @@ export function initHeader() {
       if (islandRight && settingsDropdownMenu && settingsDropdownMenu.parentElement !== islandRight) {
         islandRight.appendChild(settingsDropdownMenu);
       }
+      currentSectionId = 'home';
       updateIslandsSections(0);
       updateActiveLabels('home');
     } else {
@@ -215,6 +218,8 @@ export function initHeader() {
       });
       islandsAboutBox?.classList.remove('expanded');
       islandsSocialsRow?.classList.remove('about-expanded');
+      currentSectionId = 'home';
+      updateActiveLabels('home');
     }
 
     if (classicStylesheet) classicStylesheet.disabled = (mode !== 'classic');
@@ -348,11 +353,7 @@ export function initHeader() {
       if (lang) {
         setLanguage(lang);
         loadIslandsAboutConfig();
-        const activeLink = document.querySelector('.nav-dropdown-menu a.active');
-        if (activeLink) {
-          const activeId = activeLink.getAttribute('href')?.replace('#', '') || 'home';
-          updateActiveLabels(activeId);
-        }
+        updateActiveLabels(currentSectionId);
       }
     });
   });
@@ -399,11 +400,8 @@ export function initHeader() {
 
   function getCurrentIndex() {
     const isIslands = (localStorage.getItem('site_mode') || 'islands') === 'islands';
-    const activeLink = document.querySelector('.nav-dropdown-menu a.active');
-    if (!activeLink) return 0;
-    const id = activeLink.getAttribute('href')?.replace('#', '');
     const activeSections = isIslands ? islandsSections : sections;
-    const idx = activeSections.indexOf(id === 'about' || id === 'contact' ? 'home' : id);
+    const idx = activeSections.indexOf(currentSectionId);
     return idx !== -1 ? idx : 0;
   }
 
@@ -440,13 +438,16 @@ export function initHeader() {
       }
       const targetIdx = islandsSections.indexOf(targetId);
       if (targetIdx !== -1) {
+        currentSectionId = targetId;
         updateActiveLabels(targetId);
         updateIslandsSections(targetIdx);
         if (targetId === 'score') updateIslandsScore();
       }
     } else {
+      if (targetId === 'score') return;
       const targetEl = document.getElementById(targetId);
       if (targetEl) {
+        currentSectionId = targetId;
         updateActiveLabels(targetId);
         targetEl.scrollIntoView({ behavior: 'smooth' });
       }
@@ -466,7 +467,6 @@ export function initHeader() {
   document.getElementById('mobileNavPrevBtn')?.addEventListener('click', (e) => { e.stopPropagation(); navigateSection(-1); });
   document.getElementById('mobileNavNextBtn')?.addEventListener('click', (e) => { e.stopPropagation(); navigateSection(1); });
 
-  /* ================= CENTER ISLAND TOUCH / SWIPE ================= */
   const mobileIslandCenter = document.getElementById('mobileIslandCenter');
   let islandTouchStartX = 0;
   let islandTouchStartY = 0;
@@ -486,7 +486,6 @@ export function initHeader() {
     }, { passive: true });
   }
 
-  /* ================= PROJECT CAROUSEL SMOOTH SCROLL & AUTO CENTER ================= */
   const projectsWrapper = document.getElementById('projectsWrapper');
   const projectsPrevBtn = document.getElementById('projectsPrevBtn');
   const projectsNextBtn = document.getElementById('projectsNextBtn');
@@ -523,6 +522,7 @@ export function initHeader() {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const activeId = entry.target.id;
+        currentSectionId = activeId;
         updateActiveLabels(activeId);
       }
     });

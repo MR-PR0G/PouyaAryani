@@ -379,50 +379,58 @@ html[data-theme="sunrise"] .settings-dropdown-menu {
     left: 10px;
     right: 10px;
     width: calc(100% - 20px);
-    padding: 10px 14px;
-    height: auto;
-    min-height: 48px;
+    padding: 8px 14px;
+    height: 52px;
   }
   .nav-section-selector {
-    padding: 3px 6px;
-    font-size: 0.75rem;
-    gap: 2px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    gap: 4px;
   }
   .nav-section-selector span {
-    min-width: 50px;
+    min-width: 55px;
+    font-size: 0.78rem;
+  }
+  .logo-circle {
+    width: 38px;
+    height: 38px;
+  }
+  .nav-settings-btn {
+    width: 38px;
+    height: 38px;
+  }
+  .nav-settings-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 400px) {
+  .nav {
+    padding: 6px 10px;
+    height: 48px;
+  }
+  .nav-section-selector {
+    padding: 4px 8px;
     font-size: 0.75rem;
+  }
+  .nav-section-selector span {
+    min-width: 48px;
+    font-size: 0.72rem;
+  }
+  .nav-arrow-btn {
+    padding: 2px;
   }
   .logo-circle {
     width: 34px;
     height: 34px;
   }
   .nav-settings-btn {
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
   }
-}
-
-@media (max-width: 400px) {
-  .nav {
-    padding: 8px 10px;
-  }
-  .nav-section-selector {
-    padding: 2px 4px;
-    font-size: 0.7rem;
-  }
-  .nav-section-selector span {
-    min-width: 42px;
-    font-size: 0.7rem;
-  }
-  .nav-arrow-btn {
-    padding: 2px;
-  }
-  .logo-circle {
-    width: 30px;
-    height: 30px;
-  }
-  .nav-settings-btn {
-    width: 30px;
-    height: 30px;
+  .nav-settings-btn svg {
+    width: 16px;
+    height: 16px;
   }
 }

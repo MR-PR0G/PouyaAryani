@@ -17,6 +17,18 @@ html[data-nav-mode="islands"] .nav {
 
 html[data-nav-mode="islands"] .mobile-islands-container {
   display: flex !important;
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 28px);
+  max-width: 700px;
+  margin: 0 auto;
+  z-index: 2000 !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  direction: ltr !important;
 }
 
 html[data-nav-mode="islands"] #about,
@@ -54,7 +66,7 @@ html[data-nav-mode="islands"] .hero {
   transform: translate3d(100%, 0, 0);
   transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease, visibility 0.25s;
   pointer-events: none;
-  z-index: 1;
+  z-index: 100 !important;
   display: flex !important;
   flex-direction: column !important;
   will-change: transform, opacity;
@@ -113,7 +125,7 @@ html[data-nav-mode="islands"] .hero.islands-active {
   visibility: visible !important;
   transform: translate3d(0, 0, 0) !important;
   pointer-events: auto !important;
-  z-index: 10 !important;
+  z-index: 100 !important;
 }
 
 html[data-nav-mode="islands"] .section.islands-prev,
@@ -122,10 +134,9 @@ html[data-nav-mode="islands"] .hero.islands-prev {
   visibility: hidden !important;
   transform: translate3d(-100%, 0, 0) !important;
   pointer-events: none !important;
-  z-index: 1 !important;
+  z-index: 50 !important;
 }
 
-/* ================= SECTION EYEBROWS & TITLES (ISLANDS MODE) ================= */
 html[data-nav-mode="islands"] .section-eyebrow {
   display: block !important;
   text-align: center !important;
@@ -146,7 +157,6 @@ html[data-nav-mode="islands"] .section-title {
   text-align: center !important;
 }
 
-/* ================= HORIZONTAL SCROLL SKILLS BADGES ================= */
 .about-badges-scroll {
   display: flex;
   align-items: center;
@@ -193,7 +203,6 @@ html[data-nav-mode="islands"] .section-title {
   color: var(--cyan);
 }
 
-/* ================= PROJECTS ISLANDS ORDER & OPTIMIZATION ================= */
 html[data-nav-mode="islands"] #projects .container {
   display: flex !important;
   flex-direction: column !important;
@@ -225,6 +234,14 @@ html[data-nav-mode="islands"] #projects .projects-carousel-wrapper {
   scroll-behavior: smooth !important;
   -webkit-overflow-scrolling: touch !important;
   touch-action: pan-x;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+html[data-nav-mode="islands"] #projects .projects-carousel-wrapper::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 html[data-nav-mode="islands"] #projects .projects-track {
@@ -298,12 +315,11 @@ html[data-nav-mode="islands"] .project-img-wrapper {
   margin-bottom: 10px !important;
 }
 
-/* ================= ACHIEVEMENTS ISLANDS ORDER ================= */
 html[data-nav-mode="islands"] #achievements .container {
   display: flex !important;
   flex-direction: column !important;
   height: 100% !important;
-  justify-content: center !important;
+  justify-content: space-between !important;
   align-items: center !important;
   text-align: center !important;
 }
@@ -317,14 +333,68 @@ html[data-nav-mode="islands"] #achievements .section-title {
 
 html[data-nav-mode="islands"] #achievements .deck-container {
   width: 100% !important;
+  flex: 1 !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  justify-content: center !important;
-  margin: auto 0 !important;
+  justify-content: space-between !important;
+  margin: 0 !important;
+  padding: 4px 0 10px 0 !important;
+  box-sizing: border-box !important;
 }
 
-/* ================= SCORE TAB (ISLANDS MODE ONLY) ================= */
+html[data-nav-mode="islands"] #achievements .deck-wrapper {
+  width: 100% !important;
+  flex: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  margin-bottom: 25px !important;
+}
+
+html[data-nav-mode="islands"] #achievements .deck-controls {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 16px !important;
+  margin-top: 0 !important;
+  position: relative !important;
+  z-index: 20 !important;
+  flex-shrink: 0 !important;
+}
+
+html[data-nav-mode="islands"] #achievements .deck-card,
+html[data-nav-mode="islands"] #achievements .achievement-card,
+html[data-nav-mode="islands"] #achievements .card {
+  max-height: 100% !important;
+  padding: 16px 14px !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+}
+
+html[data-nav-mode="islands"] #achievements .deck-card h3,
+html[data-nav-mode="islands"] #achievements .deck-card h4,
+html[data-nav-mode="islands"] #achievements .achievement-card h3,
+html[data-nav-mode="islands"] #achievements .achievement-card h4 {
+  font-size: clamp(0.85rem, 3.8vw, 1.1rem) !important;
+  line-height: 1.25 !important;
+  margin-bottom: 6px !important;
+  word-break: break-word !important;
+}
+
+html[data-nav-mode="islands"] #achievements .deck-card p,
+html[data-nav-mode="islands"] #achievements .deck-card .date,
+html[data-nav-mode="islands"] #achievements .deck-card .issuer,
+html[data-nav-mode="islands"] #achievements .achievement-card p,
+html[data-nav-mode="islands"] #achievements .achievement-card .date {
+  font-size: clamp(0.72rem, 3.2vw, 0.85rem) !important;
+  line-height: 1.35 !important;
+  word-break: break-word !important;
+}
+
 html[data-nav-mode="islands"] #score {
   display: flex !important;
 }
@@ -370,7 +440,6 @@ html[data-nav-mode="islands"] #score .container {
   text-transform: uppercase;
 }
 
-/* ================= NON-ISLANDS MODE SCORE HIDING ================= */
 html:not([data-nav-mode="islands"]) #score {
   display: none !important;
 }
@@ -595,23 +664,6 @@ html[dir="rtl"] .islands-about-info {
   margin-bottom: 8px;
 }
 
-/* ================= ISLAND NAV BAR ================= */
-.mobile-islands-container {
-  position: fixed;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 28px);
-  max-width: 700px;
-  margin: 0 auto;
-  z-index: 999;
-  display: none;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  direction: ltr !important;
-}
-
 .mobile-island {
   background: rgba(10, 14, 26, 0.88) !important;
   border: 1px solid var(--border) !important;
@@ -672,18 +724,26 @@ html[dir="rtl"] .islands-about-info {
   padding: 6px 10px;
 }
 
-.island-right .settings-dropdown-menu {
+.island-right .settings-dropdown-menu,
+html[data-nav-mode="islands"] .settings-dropdown-menu {
   position: absolute !important;
   top: auto !important;
-  bottom: calc(100% + 12px) !important;
+  bottom: calc(100% + 14px) !important;
   right: 0 !important;
   left: auto !important;
   margin-top: 0 !important;
-  z-index: 1000 !important;
-  width: 160px !important;
+  z-index: 3000 !important;
+  width: 165px !important;
+  transform: translateY(8px) !important;
 }
 
-/* ================= CONTACT MODAL STYLES ================= */
+.island-right .settings-dropdown-menu.active,
+html[data-nav-mode="islands"] .settings-dropdown-menu.active {
+  transform: translateY(0) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
 .islands-modal-overlay {
   position: fixed;
   top: 0;
@@ -693,7 +753,7 @@ html[dir="rtl"] .islands-about-info {
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  z-index: 10000;
+  z-index: 100000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -790,7 +850,6 @@ html[dir="rtl"] .islands-about-info {
   stroke-width: 2;
 }
 
-/* ================= DESKTOP RECOMMENDATION TOAST ================= */
 .desktop-toast {
   position: fixed !important;
   bottom: 24px !important;
@@ -898,7 +957,6 @@ html[dir="rtl"] .islands-about-info {
   color: var(--text);
 }
 
-/* ================= LIGHT THEME ================= */
 html[data-theme="light"][data-nav-mode="islands"] .section,
 html[data-theme="light"][data-nav-mode="islands"] .hero {
   background: rgba(245, 247, 250, 0.95) !important;
@@ -939,7 +997,6 @@ html[data-theme="light"] .desktop-toast {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12) !important;
 }
 
-/* ================= SUNRISE THEME ================= */
 html[data-theme="sunrise"][data-nav-mode="islands"] .section,
 html[data-theme="sunrise"][data-nav-mode="islands"] .hero {
   background: rgba(20, 16, 10, 0.95) !important;
