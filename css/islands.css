@@ -1,0 +1,989 @@
+html[data-nav-mode="islands"] {
+  overflow: hidden !important;
+  height: 100vh !important;
+}
+
+html[data-nav-mode="islands"] body {
+  overflow: hidden !important;
+  height: 100vh !important;
+  max-width: 700px !important;
+  margin: 0 auto !important;
+  position: relative;
+}
+
+html[data-nav-mode="islands"] .nav {
+  display: none !important;
+}
+
+html[data-nav-mode="islands"] .mobile-islands-container {
+  display: flex !important;
+}
+
+html[data-nav-mode="islands"] #about,
+html[data-nav-mode="islands"] #contact,
+html[data-nav-mode="islands"] footer,
+html[data-nav-mode="islands"] #secretSection {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+html[data-nav-mode="islands"] .section,
+html[data-nav-mode="islands"] .hero {
+  position: absolute !important;
+  top: 14px !important;
+  bottom: 84px !important;
+  left: 14px !important;
+  right: 14px !important;
+  width: calc(100% - 28px) !important;
+  max-width: 672px !important;
+  margin: 0 auto !important;
+  height: auto !important;
+  padding: 16px 14px 10px 14px !important;
+  background: rgba(10, 14, 26, 0.95) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 36px !important;
+  backdrop-filter: blur(8px) translateZ(0) !important;
+  -webkit-backdrop-filter: blur(8px) translateZ(0) !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35) !important;
+  overflow-y: auto !important;
+  box-sizing: border-box !important;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(100%, 0, 0);
+  transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease, visibility 0.25s;
+  pointer-events: none;
+  z-index: 1;
+  display: flex !important;
+  flex-direction: column !important;
+  will-change: transform, opacity;
+  contain: layout style paint;
+}
+
+html[data-nav-mode="islands"] .hero-vignette {
+  display: none !important;
+}
+
+html[data-nav-mode="islands"] .container {
+  padding: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+html[data-nav-mode="islands"] .hero-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+html[data-nav-mode="islands"] .hero-text-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 8px;
+}
+
+html[data-nav-mode="islands"] .hero-name {
+  font-size: clamp(1.3rem, 4.5vw, 1.9rem) !important;
+  white-space: normal !important;
+  line-height: 1.2 !important;
+  word-break: break-word !important;
+}
+
+html[data-nav-mode="islands"] .hero-tag {
+  font-size: 0.65rem !important;
+  margin-bottom: 0.2rem !important;
+}
+
+html[data-nav-mode="islands"] .hero-subtitle {
+  font-size: 0.8rem !important;
+  margin-top: 0.2rem !important;
+  min-height: auto !important;
+}
+
+html[data-nav-mode="islands"] .section.islands-active,
+html[data-nav-mode="islands"] .hero.islands-active {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translate3d(0, 0, 0) !important;
+  pointer-events: auto !important;
+  z-index: 10 !important;
+}
+
+html[data-nav-mode="islands"] .section.islands-prev,
+html[data-nav-mode="islands"] .hero.islands-prev {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translate3d(-100%, 0, 0) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+/* ================= SECTION EYEBROWS & TITLES (ISLANDS MODE) ================= */
+html[data-nav-mode="islands"] .section-eyebrow {
+  display: block !important;
+  text-align: center !important;
+  font-size: 0.72rem !important;
+  margin: 0 auto 4px auto !important;
+  color: var(--cyan) !important;
+}
+
+html[data-nav-mode="islands"] .section-eyebrow::before,
+html[data-nav-mode="islands"] .section-eyebrow::after {
+  content: none !important;
+  display: none !important;
+}
+
+html[data-nav-mode="islands"] .section-title {
+  font-size: 1.35rem !important;
+  margin: 0 auto 8px auto !important;
+  text-align: center !important;
+}
+
+/* ================= HORIZONTAL SCROLL SKILLS BADGES ================= */
+.about-badges-scroll {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 6px 2px 10px 2px;
+  margin-bottom: 12px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+}
+
+.about-badges-scroll::-webkit-scrollbar {
+  height: 3px;
+}
+
+.about-badges-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.about-badges-scroll::-webkit-scrollbar-thumb {
+  background: var(--cyan);
+  border-radius: 10px;
+}
+
+.about-badges-scroll span {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.78rem;
+  font-weight: 500;
+  flex-shrink: 0;
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.about-badges-scroll span:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+/* ================= PROJECTS ISLANDS ORDER & OPTIMIZATION ================= */
+html[data-nav-mode="islands"] #projects .container {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  justify-content: space-between !important;
+}
+
+html[data-nav-mode="islands"] #projects .section-head {
+  display: contents !important;
+}
+
+html[data-nav-mode="islands"] #projects .section-head > div:first-child {
+  order: 1 !important;
+  text-align: center !important;
+  margin: 0 auto 4px auto !important;
+  width: 100% !important;
+}
+
+html[data-nav-mode="islands"] #projects .projects-carousel-wrapper {
+  order: 2 !important;
+  width: 100% !important;
+  margin: auto 0 !important;
+  flex: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  height: 85% !important;
+  overflow-x: auto !important;
+  scroll-snap-type: x mandatory !important;
+  scroll-behavior: smooth !important;
+  -webkit-overflow-scrolling: touch !important;
+  touch-action: pan-x;
+}
+
+html[data-nav-mode="islands"] #projects .projects-track {
+  height: 100% !important;
+  align-items: center !important;
+  display: flex !important;
+  gap: 16px !important;
+}
+
+html[data-nav-mode="islands"] #projects .projects-controls {
+  order: 3 !important;
+  display: flex !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  margin: -32px auto 14px auto !important;
+  position: relative !important;
+  z-index: 15 !important;
+}
+
+html[data-nav-mode="islands"] #projects .projects-filter-row {
+  order: 4 !important;
+  display: flex !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  margin: 0 auto 4px auto !important;
+}
+
+html[data-nav-mode="islands"] .projects-filter-btn {
+  padding: 5px 12px !important;
+  font-size: 0.75rem !important;
+  border-radius: 999px !important;
+}
+
+html[data-nav-mode="islands"] .project-card {
+  padding: 14px !important;
+  border-radius: 22px !important;
+  background: var(--surface-strong) !important;
+  border: 1px solid var(--border) !important;
+  flex: 0 0 clamp(230px, 68vw, 270px) !important;
+  min-width: 230px !important;
+  max-width: 270px !important;
+  height: 82% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  scroll-snap-align: center !important;
+  scroll-snap-stop: always !important;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+html[data-nav-mode="islands"] .project-card h4,
+html[data-nav-mode="islands"] .project-card h3 {
+  font-size: 1rem !important;
+  margin-bottom: 4px !important;
+}
+
+html[data-nav-mode="islands"] .project-card p {
+  font-size: 0.82rem !important;
+  line-height: 1.4 !important;
+  margin-bottom: 8px !important;
+  flex: 1 !important;
+  overflow-y: auto !important;
+}
+
+html[data-nav-mode="islands"] .project-img-wrapper {
+  height: 48% !important;
+  max-height: 180px !important;
+  border-radius: 14px !important;
+  margin-bottom: 10px !important;
+}
+
+/* ================= ACHIEVEMENTS ISLANDS ORDER ================= */
+html[data-nav-mode="islands"] #achievements .container {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+
+html[data-nav-mode="islands"] #achievements .section-eyebrow,
+html[data-nav-mode="islands"] #achievements .section-title {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+html[data-nav-mode="islands"] #achievements .deck-container {
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: auto 0 !important;
+}
+
+/* ================= SCORE TAB (ISLANDS MODE ONLY) ================= */
+html[data-nav-mode="islands"] #score {
+  display: flex !important;
+}
+
+html[data-nav-mode="islands"] #score .container {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+}
+
+.islands-score-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: 32px 42px;
+  margin: auto 0;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  width: clamp(220px, 80%, 320px);
+}
+
+.islands-score-value {
+  font-family: var(--font-display);
+  font-size: 3.8rem;
+  font-weight: 800;
+  color: var(--cyan);
+  text-shadow: 0 0 20px var(--glow-color);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.islands-score-label {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* ================= NON-ISLANDS MODE SCORE HIDING ================= */
+html:not([data-nav-mode="islands"]) #score {
+  display: none !important;
+}
+
+.islands-socials-row {
+  display: none;
+}
+
+html[data-nav-mode="islands"] .islands-socials-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: auto 0;
+  width: 100%;
+  transition: transform 0.25s var(--ease), margin 0.25s var(--ease);
+}
+
+html[data-nav-mode="islands"] .islands-socials-row.about-expanded {
+  flex-direction: column;
+  gap: 8px;
+  margin: 6px 0 10px 0;
+}
+
+.islands-social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  width: clamp(190px, 72%, 260px);
+  max-width: 100%;
+  box-sizing: border-box;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: var(--surface-strong);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 0.2s var(--ease), transform 0.2s var(--ease), color 0.2s var(--ease);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.islands-socials-row.about-expanded .islands-social-btn {
+  padding: 8px 18px;
+  width: clamp(180px, 70%, 240px);
+  font-size: 0.82rem;
+  border-radius: 14px;
+}
+
+.islands-social-btn:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  transform: translateY(-2px);
+}
+
+.islands-social-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+.islands-about-box {
+  display: none;
+}
+
+html[data-nav-mode="islands"] .islands-about-box {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  align-self: center;
+  margin-top: auto !important;
+  margin-bottom: 0 !important;
+  padding: 4px 14px;
+  background: var(--surface-strong) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 999px;
+  transition: border-radius 0.25s var(--ease), padding 0.25s var(--ease), margin 0.25s var(--ease);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+html[data-nav-mode="islands"] .islands-about-box.expanded {
+  width: 100% !important;
+  max-width: 100% !important;
+  border-radius: 24px !important;
+  padding: 12px 14px !important;
+  margin-top: 6px !important;
+}
+
+.islands-about-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.islands-about-box.expanded .islands-about-header {
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.islands-about-header .avatar-frame {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  padding: 1px;
+  margin-bottom: 0;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: width 0.25s var(--ease), height 0.25s var(--ease), border-radius 0.25s var(--ease);
+}
+
+.islands-about-header .avatar-frame .inner {
+  border-radius: 50%;
+  font-size: 0.75rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.islands-about-header .avatar-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.islands-about-box.expanded .islands-about-header .avatar-frame {
+  width: 68px;
+  height: 68px;
+  border-radius: 18px;
+}
+
+.islands-about-box.expanded .islands-about-header .avatar-frame .inner {
+  border-radius: 16px;
+  font-size: 1.2rem;
+}
+
+.islands-about-info {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+
+html[dir="rtl"] .islands-about-info {
+  text-align: right;
+}
+
+.islands-about-info h3 {
+  font-family: var(--font-display);
+  font-size: clamp(0.78rem, 3.2vw, 0.92rem);
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.islands-about-box.expanded .islands-about-info h3 {
+  font-size: 1.05rem;
+  margin-top: 2px;
+  white-space: normal;
+}
+
+.islands-expand-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--cyan);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: transform 0.25s var(--ease), border-color 0.25s var(--ease);
+  flex-shrink: 0;
+}
+
+.islands-expand-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.islands-about-box.expanded .islands-expand-btn {
+  transform: rotate(180deg);
+  border-color: var(--cyan);
+}
+
+.islands-about-body {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.3s var(--ease), opacity 0.2s var(--ease), margin-top 0.2s var(--ease);
+}
+
+.islands-about-box.expanded .islands-about-body {
+  max-height: 480px;
+  opacity: 1;
+  overflow-y: auto;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.islands-about-body p {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+/* ================= ISLAND NAV BAR ================= */
+.mobile-islands-container {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 28px);
+  max-width: 700px;
+  margin: 0 auto;
+  z-index: 999;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  direction: ltr !important;
+}
+
+.mobile-island {
+  background: rgba(10, 14, 26, 0.88) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 40px !important;
+  backdrop-filter: blur(10px) translateZ(0) !important;
+  -webkit-backdrop-filter: blur(10px) translateZ(0) !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35) !important;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  height: 52px;
+}
+
+.island-left {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: 0 !important;
+  justify-content: center;
+}
+
+.island-left .logo-circle {
+  width: 44px;
+  height: 44px;
+  border: 2px solid var(--cyan);
+  box-shadow: 0 0 12px var(--glow-color);
+}
+
+.island-center {
+  flex: 1;
+  justify-content: space-between;
+  padding: 6px 14px;
+  touch-action: pan-x;
+  overflow-x: auto;
+  user-select: none;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.island-center::-webkit-scrollbar {
+  display: none;
+}
+
+.island-center span {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+  user-select: none;
+  pointer-events: none;
+}
+
+.island-right {
+  position: relative;
+  gap: 6px;
+  padding: 6px 10px;
+}
+
+.island-right .settings-dropdown-menu {
+  position: absolute !important;
+  top: auto !important;
+  bottom: calc(100% + 12px) !important;
+  right: 0 !important;
+  left: auto !important;
+  margin-top: 0 !important;
+  z-index: 1000 !important;
+  width: 160px !important;
+}
+
+/* ================= CONTACT MODAL STYLES ================= */
+.islands-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s var(--ease), visibility 0.2s;
+}
+
+.islands-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.islands-modal-card {
+  width: calc(100% - 32px);
+  max-width: 380px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: 20px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  transform: scale(0.95);
+  transition: transform 0.2s var(--ease);
+}
+
+.islands-modal-overlay.active .islands-modal-card {
+  transform: scale(1);
+}
+
+.islands-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.islands-modal-header h3 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--text);
+  margin: 0;
+}
+
+.islands-modal-close {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 4px;
+  transition: color 0.2s;
+}
+
+.islands-modal-close:hover {
+  color: var(--cyan);
+}
+
+.islands-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modal-link-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  border-radius: 16px;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  color: var(--text);
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: border-color 0.2s var(--ease), transform 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.modal-link-btn:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  transform: translateY(-2px);
+}
+
+.modal-link-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+/* ================= DESKTOP RECOMMENDATION TOAST ================= */
+.desktop-toast {
+  position: fixed !important;
+  bottom: 24px !important;
+  right: 24px !important;
+  width: clamp(210px, 85vw, 250px) !important;
+  background: rgba(10, 14, 26, 0.96) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 22px !important;
+  padding: 16px !important;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.55) !important;
+  z-index: 100000 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 12px !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  transform: translateY(120px) !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.35s ease, visibility 0.35s !important;
+  pointer-events: none !important;
+}
+
+.desktop-toast.show {
+  transform: translateY(0) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.desktop-toast-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.desktop-toast-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: rgba(79, 216, 232, 0.12);
+  color: var(--cyan);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.desktop-toast-text strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.desktop-toast-text p {
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.desktop-toast-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+
+.desktop-toast-btn.primary {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--cyan);
+  color: #040408;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  transition: opacity 0.2s;
+}
+
+.desktop-toast-btn.primary:hover {
+  opacity: 0.9;
+}
+
+.desktop-toast-btn.close {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: color 0.2s;
+}
+
+.desktop-toast-btn.close:hover {
+  color: var(--text);
+}
+
+/* ================= LIGHT THEME ================= */
+html[data-theme="light"][data-nav-mode="islands"] .section,
+html[data-theme="light"][data-nav-mode="islands"] .hero {
+  background: rgba(245, 247, 250, 0.95) !important;
+  border-color: rgba(20, 25, 40, 0.15) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+html[data-theme="light"] .mobile-island {
+  background: rgba(255, 255, 255, 0.88) !important;
+  border-color: rgba(20, 25, 40, 0.15) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+html[data-theme="light"] .islands-about-box {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(20, 25, 40, 0.15) !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08) !important;
+}
+
+html[data-theme="light"] .islands-social-btn,
+html[data-theme="light"] .about-badges-scroll span,
+html[data-theme="light"] .islands-score-card {
+  background: rgba(235, 240, 248, 0.95);
+  border-color: rgba(20, 25, 40, 0.15);
+  color: var(--text);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+html[data-theme="light"] .islands-expand-btn {
+  background: rgba(225, 232, 240, 0.9);
+  border-color: rgba(20, 25, 40, 0.15);
+  color: var(--cyan);
+}
+
+html[data-theme="light"] .desktop-toast {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(20, 25, 40, 0.15) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* ================= SUNRISE THEME ================= */
+html[data-theme="sunrise"][data-nav-mode="islands"] .section,
+html[data-theme="sunrise"][data-nav-mode="islands"] .hero {
+  background: rgba(20, 16, 10, 0.95) !important;
+  border-color: rgba(245, 158, 11, 0.25) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+}
+
+html[data-theme="sunrise"] .mobile-island {
+  background: rgba(32, 26, 12, 0.88) !important;
+  border-color: rgba(245, 158, 11, 0.25) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), 0 2px 10px rgba(245, 158, 11, 0.15) !important;
+}
+
+html[data-theme="sunrise"] .islands-about-box {
+  background: rgba(26, 21, 12, 0.95) !important;
+  border-color: rgba(245, 158, 11, 0.25) !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+}
+
+html[data-theme="sunrise"] .islands-social-btn,
+html[data-theme="sunrise"] .about-badges-scroll span,
+html[data-theme="sunrise"] .islands-score-card {
+  background: rgba(38, 30, 16, 0.9);
+  border-color: rgba(245, 158, 11, 0.25);
+  color: var(--text);
+}
+
+html[data-theme="sunrise"] .islands-expand-btn {
+  background: rgba(20, 16, 10, 0.9);
+  border-color: rgba(245, 158, 11, 0.25);
+  color: var(--cyan);
+}
+
+html[data-theme="sunrise"] .desktop-toast {
+  background: rgba(26, 21, 12, 0.95) !important;
+  border-color: rgba(245, 158, 11, 0.25) !important;
+}
+
+@media (max-width: 480px) {
+  .mobile-islands-container {
+    bottom: 10px;
+    width: calc(100% - 16px);
+  }
+  html[data-nav-mode="islands"] .islands-about-box {
+    padding: 4px 10px;
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "links": [
+    {
+      "title": "GitHub",
+      "icon": "github",
+      "url": "https://github.com/MR-PR0G"
+    },
+    {
+      "title": "Telegram",
+      "icon": "telegram",
+      "url": "https://t.me/MR_PR0G"
+    },
+    {
+      "title": "Email",
+      "icon": "email",
+      "url": "mailto:pouya.aryani@example.com"
+    }
+  ]
+}
