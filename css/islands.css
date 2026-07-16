@@ -1,11 +1,13 @@
 html[data-nav-mode="islands"] {
   overflow: hidden !important;
   height: 100vh !important;
+  height: 100dvh !important;
 }
 
 html[data-nav-mode="islands"] body {
   overflow: hidden !important;
   height: 100vh !important;
+  height: 100dvh !important;
   max-width: 700px !important;
   margin: 0 auto !important;
   position: relative;
@@ -17,18 +19,20 @@ html[data-nav-mode="islands"] .nav {
 
 html[data-nav-mode="islands"] .mobile-islands-container {
   display: flex !important;
-  position: fixed;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 28px);
-  max-width: 700px;
-  margin: 0 auto;
+  position: fixed !important;
+  bottom: calc(14px + env(safe-area-inset-bottom, 0px)) !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: calc(100% - 28px) !important;
+  max-width: 672px !important;
+  margin: 0 auto !important;
+  height: 52px !important;
   z-index: 2000 !important;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
   direction: ltr !important;
+  box-sizing: border-box !important;
 }
 
 html[data-nav-mode="islands"] #about,
@@ -43,9 +47,9 @@ html[data-nav-mode="islands"] #secretSection {
 
 html[data-nav-mode="islands"] .section,
 html[data-nav-mode="islands"] .hero {
-  position: absolute !important;
+  position: fixed !important;
   top: 14px !important;
-  bottom: 84px !important;
+  bottom: calc(78px + env(safe-area-inset-bottom, 0px)) !important;
   left: 14px !important;
   right: 14px !important;
   width: calc(100% - 28px) !important;
@@ -61,16 +65,16 @@ html[data-nav-mode="islands"] .hero {
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35) !important;
   overflow-y: auto !important;
   box-sizing: border-box !important;
-  opacity: 0;
-  visibility: hidden;
-  transform: translate3d(100%, 0, 0);
-  transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease, visibility 0.25s;
-  pointer-events: none;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translate3d(100%, 0, 0) !important;
+  transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease, visibility 0.25s !important;
+  pointer-events: none !important;
   z-index: 100 !important;
   display: flex !important;
   flex-direction: column !important;
-  will-change: transform, opacity;
-  contain: layout style paint;
+  will-change: transform, opacity !important;
+  contain: layout style paint !important;
 }
 
 html[data-nav-mode="islands"] .hero-vignette {
