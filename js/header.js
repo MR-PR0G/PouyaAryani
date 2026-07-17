@@ -1,4 +1,7 @@
-import { setLanguage } from './i18n.js';
+import { getLanguage, setLanguage, getNestedTranslation } from './i18n.js';
+import { translations } from './translations.js';
+
+const SITE_VERSION = "0.1.0";
 
 export function initHeader() {
   const settingsWrapper = document.getElementById('settingsWrapper');
@@ -9,6 +12,14 @@ export function initHeader() {
 
   const contactModal = document.getElementById('contactModal');
   const closeContactModal = document.getElementById('closeContactModal');
+
+  const infoModal = document.getElementById('infoModal');
+  const closeInfoModal = document.getElementById('closeInfoModal');
+
+  const logoPillContainer = document.getElementById('logoPillContainer');
+  const mobileLogoCircle = document.getElementById('mobileLogoCircle');
+  const logoGameBtn = document.getElementById('logoGameBtn');
+  const logoInfoBtn = document.getElementById('logoInfoBtn');
 
   const desktopToast = document.getElementById('desktopToast');
   const toastSwitchBtn = document.getElementById('toastSwitchBtn');
@@ -45,59 +56,99 @@ export function initHeader() {
   const sections = ['home', 'about', 'projects', 'achievements', 'contact'];
   const islandsSections = ['home', 'projects', 'achievements', 'score'];
 
-  const sectionLabels = {
-    fa: { home: 'خانه', projects: 'پروژه‌ها', achievements: 'دستآوردها', score: 'امتیاز', about: 'درباره من', contact: 'تماس' },
-    en: { home: 'Home', projects: 'Projects', achievements: 'Achievements', score: 'Score', about: 'About', contact: 'Contact' }
-  };
+  const siteVersionEl = document.getElementById('siteVersionDisplay');
+  if (siteVersionEl) {
+    siteVersionEl.textContent = SITE_VERSION;
+  }
 
   function updateIslandsScore() {
     const scoreVal = document.getElementById('islandsScoreValue');
-    if (scoreVal) {
-      const savedScore = localStorage.getItem('minigame_score') || sessionStorage.getItem('minigame_score') || '0';
-      scoreVal.textContent = savedScore;
+    if (!scoreVal) return;
+
+    const secretScoreEl = document.querySelector('#secretSection .secret-score') || document.querySelector('.secret-score');
+    let currentScore = null;
+
+    if (secretScoreEl && secretScoreEl.textContent.trim() !== '') {
+      currentScore = secretScoreEl.textContent.trim();
     }
+
+    if (!currentScore || currentScore === '0') {
+      const keys = ['minigame_score', 'minigameScore', 'game_score', 'score', 'minigame_high_score', 'highScore', 'secret_score'];
+      for (const key of keys) {
+        const val = localStorage.getItem(key) || sessionStorage.getItem(key);
+        if (val !== null && val !== undefined && val !== '' && val !== '0') {
+          currentScore = val;
+          break;
+        }
+      }
+    }
+
+    scoreVal.textContent = currentScore || '0';
   }
 
   async function loadIslandsAboutConfig() {
+    const lang = getLanguage();
+    const nameEl = document.querySelector('#islandsAboutBox .islands-about-info h3');
+
     try {
       const res = await fetch('config/about/about.json');
-      if (!res.ok) return;
-      const data = await res.json();
-      if (!data) return;
+      if (res.ok) {
+        const data = await res.json();
+        if (data) {
+          if (nameEl) {
+            if (data.name && typeof data.name === 'object') {
+              nameEl.textContent = data.name[lang] || data.name['en'] || getNestedTranslation(translations[lang], 'about.name');
+            } else {
+              nameEl.textContent = getNestedTranslation(translations[lang], 'about.name');
+            }
+          }
 
-      const currentLang = localStorage.getItem('lang') || 'en';
-      const lang = (currentLang === 'fa' || currentLang === 'fa-IR') ? 'fa' : 'en';
+          const avatarFrame = document.querySelector('#islandsAboutBox .avatar-frame');
+          if (avatarFrame && data.avatar) {
+            avatarFrame.innerHTML = `<img src="${data.avatar}" alt="${data.name || 'Profile'}">`;
+          }
 
-      const nameEl = document.querySelector('#islandsAboutBox .islands-about-info h3');
-      if (nameEl && data.name) nameEl.textContent = data.name;
+          const roleEl = document.querySelector('#islandsAboutBox .role-line');
+          if (roleEl) {
+            if (data.role && typeof data.role === 'object') {
+              roleEl.textContent = data.role[lang] || data.role['en'] || getNestedTranslation(translations[lang], 'about.role');
+            } else {
+              roleEl.textContent = getNestedTranslation(translations[lang], 'about.role');
+            }
+          }
 
-      const avatarFrame = document.querySelector('#islandsAboutBox .avatar-frame');
-      if (avatarFrame && data.avatar) {
-        avatarFrame.innerHTML = `<img src="${data.avatar}" alt="${data.name || 'Profile'}">`;
-      }
+          const bioEl = document.querySelector('#islandsAboutBox p');
+          if (bioEl) {
+            if (data.bio && typeof data.bio === 'object') {
+              bioEl.textContent = data.bio[lang] || data.bio['en'] || getNestedTranslation(translations[lang], 'about.bio');
+            } else {
+              bioEl.textContent = getNestedTranslation(translations[lang], 'about.bio');
+            }
+          }
 
-      const roleEl = document.querySelector('#islandsAboutBox .role-line');
-      if (roleEl && data.role) {
-        roleEl.textContent = data.role[lang] || data.role['en'] || '';
-      }
+          const badgesScroll = document.querySelector('#islandsSkillsScroll');
+          if (badgesScroll && data.badges) {
+            const badgesList = data.badges[lang] || data.badges['en'] || [];
+            if (badgesList.length) {
+              badgesScroll.innerHTML = badgesList.map(b => `<span>${b}</span>`).join('');
+            }
+          }
 
-      const bioEl = document.querySelector('#islandsAboutBox p');
-      if (bioEl && data.bio) {
-        bioEl.textContent = data.bio[lang] || data.bio['en'] || '';
-      }
-
-      const badgesScroll = document.querySelector('#islandsSkillsScroll');
-      if (badgesScroll && data.badges) {
-        const badgesList = data.badges[lang] || data.badges['en'] || [];
-        badgesScroll.innerHTML = badgesList.map(b => `<span>${b}</span>`).join('');
-      }
-
-      const desktopBadgesScroll = document.querySelector('#aboutSkillsScroll');
-      if (desktopBadgesScroll && data.badges) {
-        const badgesList = data.badges[lang] || data.badges['en'] || [];
-        desktopBadgesScroll.innerHTML = badgesList.map(b => `<span>${b}</span>`).join('');
+          const desktopBadgesScroll = document.querySelector('#aboutSkillsScroll');
+          if (desktopBadgesScroll && data.badges) {
+            const badgesList = data.badges[lang] || data.badges['en'] || [];
+            if (badgesList.length) {
+              desktopBadgesScroll.innerHTML = badgesList.map(b => `<span>${b}</span>`).join('');
+            }
+          }
+          return;
+        }
       }
     } catch (e) {}
+
+    if (nameEl) {
+      nameEl.textContent = getNestedTranslation(translations[lang], 'about.name');
+    }
   }
 
   async function loadIslandsLinks() {
@@ -148,9 +199,18 @@ export function initHeader() {
   loadIslandsLinks();
   updateIslandsScore();
 
-  islandsExpandBtn?.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const isExpanded = islandsAboutBox?.classList.toggle('expanded');
+  window.addEventListener('storage', updateIslandsScore);
+
+  const secretScoreEl = document.querySelector('#secretSection .secret-score');
+  if (secretScoreEl) {
+    const scoreObserver = new MutationObserver(() => {
+      updateIslandsScore();
+    });
+    scoreObserver.observe(secretScoreEl, { childList: true, characterData: true, subtree: true });
+  }
+
+  islandsAboutBox?.addEventListener('click', () => {
+    const isExpanded = islandsAboutBox.classList.toggle('expanded');
     islandsSocialsRow?.classList.toggle('about-expanded', isExpanded);
   });
 
@@ -226,6 +286,11 @@ export function initHeader() {
 
     if (settingsDropdownMenu) {
       settingsDropdownMenu.classList.remove('active');
+      settingsBtn?.classList.remove('active');
+      mobileSettingsBtn?.classList.remove('active');
+    }
+    if (logoPillContainer) {
+      logoPillContainer.classList.remove('active');
     }
 
     localStorage.setItem('site_mode', mode);
@@ -248,6 +313,39 @@ export function initHeader() {
   modeIslandsBtn?.addEventListener('click', (e) => {
     e.stopPropagation();
     applyMode('islands');
+  });
+
+  mobileLogoCircle?.addEventListener('click', (e) => {
+    const isIslands = (localStorage.getItem('site_mode') || 'islands') === 'islands';
+    if (isIslands) {
+      e.stopPropagation();
+      settingsDropdownMenu?.classList.remove('active');
+      settingsBtn?.classList.remove('active');
+      mobileSettingsBtn?.classList.remove('active');
+      logoPillContainer?.classList.toggle('active');
+    }
+  });
+
+  logoGameBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    logoPillContainer?.classList.remove('active');
+    triggerMinigameTransition(mobileLogoCircle || document.querySelector('.logo-circle'));
+  });
+
+  logoInfoBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    logoPillContainer?.classList.remove('active');
+    infoModal?.classList.add('active');
+  });
+
+  closeInfoModal?.addEventListener('click', () => {
+    infoModal?.classList.remove('active');
+  });
+
+  infoModal?.addEventListener('click', (e) => {
+    if (e.target === infoModal) {
+      infoModal.classList.remove('active');
+    }
   });
 
   logoCircles.forEach((circle) => {
@@ -286,7 +384,7 @@ export function initHeader() {
   function triggerMinigameTransition(targetCircle) {
     sessionStorage.setItem('minigame_access', 'true');
 
-    const rect = targetCircle.getBoundingClientRect();
+    const rect = targetCircle ? targetCircle.getBoundingClientRect() : { left: window.innerWidth / 2, top: window.innerHeight / 2, width: 0, height: 0 };
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
 
@@ -309,6 +407,7 @@ export function initHeader() {
   function toggleSettings(e) {
     e?.stopPropagation();
     navDropdownWrapper?.classList.remove('open');
+    logoPillContainer?.classList.remove('active');
 
     const currentMode = localStorage.getItem('site_mode') || 'islands';
     const islandRight = document.getElementById('islandRight') || document.querySelector('.island-right');
@@ -324,7 +423,9 @@ export function initHeader() {
     }
 
     if (settingsDropdownMenu) {
-      settingsDropdownMenu.classList.toggle('active');
+      const isActive = settingsDropdownMenu.classList.toggle('active');
+      settingsBtn?.classList.toggle('active', isActive);
+      mobileSettingsBtn?.classList.toggle('active', isActive);
     }
   }
 
@@ -354,6 +455,7 @@ export function initHeader() {
         setLanguage(lang);
         loadIslandsAboutConfig();
         updateActiveLabels(currentSectionId);
+        updateIslandsScore();
       }
     });
   });
@@ -374,7 +476,11 @@ export function initHeader() {
   navSectionSelector?.addEventListener('click', (e) => {
     if (e.target.closest('.nav-arrow-btn')) return;
     e.stopPropagation();
-    if (settingsDropdownMenu) settingsDropdownMenu.classList.remove('active');
+    if (settingsDropdownMenu) {
+      settingsDropdownMenu.classList.remove('active');
+      settingsBtn?.classList.remove('active');
+      mobileSettingsBtn?.classList.remove('active');
+    }
     navDropdownWrapper?.classList.toggle('open');
   });
 
@@ -392,6 +498,11 @@ export function initHeader() {
   document.addEventListener('click', (e) => {
     if (settingsDropdownMenu && !settingsDropdownMenu.contains(e.target) && !settingsBtn?.contains(e.target) && !mobileSettingsBtn?.contains(e.target)) {
       settingsDropdownMenu.classList.remove('active');
+      settingsBtn?.classList.remove('active');
+      mobileSettingsBtn?.classList.remove('active');
+    }
+    if (logoPillContainer && !logoPillContainer.contains(e.target)) {
+      logoPillContainer.classList.remove('active');
     }
     if (navDropdownWrapper && !navDropdownWrapper.contains(e.target)) {
       navDropdownWrapper.classList.remove('open');
@@ -406,8 +517,7 @@ export function initHeader() {
   }
 
   function updateActiveLabels(activeId) {
-    const currentLang = localStorage.getItem('lang') || 'en';
-    const lang = (currentLang === 'fa' || currentLang === 'fa-IR') ? 'fa' : 'en';
+    const lang = getLanguage();
 
     dropdownLinks.forEach((link) => {
       const href = link.getAttribute('href')?.replace('#', '');
@@ -418,7 +528,8 @@ export function initHeader() {
       }
     });
 
-    const labelText = sectionLabels[lang][activeId] || sectionLabels['en'][activeId] || activeId;
+    const labelText = getNestedTranslation(translations[lang], `nav.${activeId}`) || activeId;
+
     if (currentLabel) currentLabel.textContent = labelText;
     if (mobileCurrentLabel) mobileCurrentLabel.textContent = labelText;
   }
@@ -536,5 +647,7 @@ export function initHeader() {
 
   window.addEventListener('languageChanged', () => {
     loadIslandsAboutConfig();
+    updateActiveLabels(currentSectionId);
+    updateIslandsScore();
   });
 }

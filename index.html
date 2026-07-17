@@ -68,7 +68,7 @@
         <div class="settings-menu-divider"></div>
         <div class="lang-switch-row">
           <span class="flag-icon active" data-lang="en" title="English">🇺🇸</span>
-          <span class="flag-icon" data-lang="fa" title="Persian">🇮🇷</span>
+          <span class="flag-icon" data-lang="fa" title="Persian"><img src="config/flagofiranemoji.png" alt="Persian"></span>
         </div>
       </div>
     </div>
@@ -76,9 +76,17 @@
 </nav>
 
 <div class="mobile-islands-container" id="mobileIslandsNav">
-  <div class="mobile-island island-left">
-    <div class="logo-circle">
-      <img src="logo.png" alt="Brand Logo">
+  <div class="mobile-island island-left" id="islandLeft">
+    <div class="logo-pill-container" id="logoPillContainer">
+      <button class="logo-action-btn" id="logoGameBtn" title="Game">
+        <svg viewBox="0 0 24 24"><line x1="6" y1="12" x2="10" y2="12"></line><line x1="8" y1="10" x2="8" y2="14"></line><circle cx="15" cy="13" r="1"></circle><circle cx="18" cy="11" r="1"></circle><rect x="2" y="6" width="20" height="12" rx="6"></rect></svg>
+      </button>
+      <button class="logo-action-btn" id="logoInfoBtn" title="Info">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+      </button>
+      <div class="logo-circle" id="mobileLogoCircle">
+        <img src="logo.png" alt="Brand Logo">
+      </div>
     </div>
   </div>
 
@@ -108,25 +116,43 @@
 <div class="islands-modal-overlay" id="contactModal">
   <div class="islands-modal-card">
     <div class="islands-modal-header">
-      <h3>Get In Touch</h3>
+      <h3 data-i18n="contactModal.title">Get In Touch</h3>
       <button class="islands-modal-close" id="closeContactModal" aria-label="Close Modal">&times;</button>
     </div>
     <div class="islands-modal-body">
       <a href="https://t.me/MR_PR0G" target="_blank" rel="noopener noreferrer" class="modal-link-btn">
         <svg viewBox="0 0 24 24"><path d="M21.5 2L2 11.5l6 2.5L20 4.5l-10 11.5v5l4-3.5 5.5 3L22.5 2z"></path></svg>
-        <span>Telegram Channel</span>
+        <span data-i18n="contactModal.telegramChannel">Telegram Channel</span>
       </a>
       <a href="https://t.me/MR_PR0G" target="_blank" rel="noopener noreferrer" class="modal-link-btn">
         <svg viewBox="0 0 24 24"><path d="M21.5 2L2 11.5l6 2.5L20 4.5l-10 11.5v5l4-3.5 5.5 3L22.5 2z"></path></svg>
-        <span>Direct Telegram Chat</span>
+        <span data-i18n="contactModal.telegramChat">Direct Telegram Chat</span>
       </a>
       <a href="mailto:pouya.aryani@example.com" class="modal-link-btn">
         <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-        <span>Send Email</span>
+        <span data-i18n="contactModal.sendEmail">Send Email</span>
       </a>
       <a href="https://github.com/MR-PR0G" target="_blank" rel="noopener noreferrer" class="modal-link-btn">
         <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-        <span>GitHub Profile</span>
+        <span data-i18n="contactModal.githubProfile">GitHub Profile</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="islands-modal-overlay" id="infoModal">
+  <div class="islands-modal-card">
+    <div class="islands-modal-header">
+      <h3 data-i18n="infoModal.title">Site Specifications</h3>
+      <button class="islands-modal-close" id="closeInfoModal" aria-label="Close Modal">&times;</button>
+    </div>
+    <div class="islands-modal-body info-modal-body">
+      <p><strong data-i18n="infoModal.ownerLabel">Owner:</strong> <span data-i18n="infoModal.ownerName">Pouya Aryani</span></p>
+      <p class="info-built-text"><span data-i18n="infoModal.builtText">Built with precision and engineering obsession</span></p>
+      <p><strong data-i18n="infoModal.versionLabel">Site Version:</strong> <span id="siteVersionDisplay">0.1.0</span></p>
+      <a href="https://github.com/MR-PR0G" target="_blank" rel="noopener noreferrer" class="modal-link-btn info-github-btn" style="margin-top: 6px;">
+        <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+        <span data-i18n="infoModal.githubSource">View Source on GitHub</span>
       </a>
     </div>
   </div>
@@ -154,7 +180,7 @@
     <div class="hero-text-group">
       <div class="hero-tag" data-i18n="hero.tag">SYSTEMS &amp; BACKEND ENGINEER</div>
       <div class="h1-wrap">
-        <h1 class="hero-name" id="heroName">Pouya Aryani</h1>
+        <h1 class="hero-name" id="heroName" data-i18n="about.name">Pouya Aryani</h1>
       </div>
       <div class="hero-subtitle" id="heroSubtitle" data-i18n="hero.subtitle">Full-Stack &amp; Systems Engineer</div>
     </div>
@@ -165,10 +191,10 @@
       <div class="islands-about-header">
         <div class="avatar-frame"><div class="inner">PA</div></div>
         <div class="islands-about-info">
-          <h3>Pouya Aryani</h3>
+          <h3 data-i18n="about.name">Pouya Aryani</h3>
         </div>
         <button class="islands-expand-btn" id="islandsExpandBtn" aria-label="Expand About">
-          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
         </button>
       </div>
       <div class="islands-about-body" id="islandsAboutBody">
@@ -196,7 +222,7 @@
     <div class="about-grid">
       <div class="about-card glass reveal">
         <div class="avatar-frame"><div class="inner">PA</div></div>
-        <h3>Pouya Aryani</h3>
+        <h3 data-i18n="about.name">Pouya Aryani</h3>
         <div class="role-line" data-i18n="about.role">// Backend &amp; Systems Engineer, Rust-first</div>
         <p data-i18n="about.bio">I build fast, dependable backend systems — mostly in Rust, occasionally in Go — and I keep a foot firmly in Linux internals. I care about correctness, low-level performance, and software that stays out of the user's way. When I'm not shipping services, I'm contributing to open source or tinkering with Wayland compositors.</p>
         

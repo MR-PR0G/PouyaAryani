@@ -2,7 +2,7 @@ import { translations } from './translations.js';
 
 let currentLang = localStorage.getItem('site_lang') || 'en';
 
-function getNestedTranslation(obj, path) {
+export function getNestedTranslation(obj, path) {
   return path.split('.').reduce((prev, curr) => prev && prev[curr], obj);
 }
 

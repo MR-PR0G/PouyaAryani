@@ -386,3 +386,67 @@ html[data-theme="dark"] .skill-progress-bg {
   font-size: 0.82rem !important;
   font-weight: bold !important;
 }
+
+.deck-container {
+  width: 100% !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+.deck-wrapper {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 260px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  margin-bottom: 20px !important;
+}
+
+.deck-card,
+.achievement-card,
+#achievements .card {
+  height: auto !important;
+  max-height: none !important;
+  min-height: fit-content !important;
+  padding: 18px 16px !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  overflow: visible !important;
+}
+
+.deck-card h3,
+.deck-card h4,
+.achievement-card h3,
+.achievement-card h4 {
+  font-size: clamp(0.9rem, 3.8vw, 1.15rem) !important;
+  line-height: 1.3 !important;
+  margin-bottom: 6px !important;
+  word-break: break-word !important;
+}
+
+.deck-card p,
+.deck-card .date,
+.deck-card .issuer,
+.achievement-card p,
+.achievement-card .date {
+  font-size: clamp(0.75rem, 3.2vw, 0.88rem) !important;
+  line-height: 1.4 !important;
+  word-break: break-word !important;
+}
+
+.deck-controls {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 16px !important;
+  margin-top: 10px !important;
+  position: relative !important;
+  z-index: 20 !important;
+}

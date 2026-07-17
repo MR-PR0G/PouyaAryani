@@ -6,6 +6,7 @@ export const translations = {
       projects: "Projects",
       skills: "Skills",
       achievements: "Achievements",
+      score: "Score",
       contact: "Contact"
     },
     hero: {
@@ -17,6 +18,7 @@ export const translations = {
     about: {
       eyebrow: "Who I am",
       title: "About",
+      name: "Pouya Aryani",
       role: "// Backend & Systems Engineer, Rust-first",
       bio: "I build fast, dependable backend systems — mostly in Rust, occasionally in Go — and I keep a foot firmly in Linux internals. I care about correctness, low-level performance, and software that stays out of the user's way. When I'm not shipping services, I'm contributing to open source or tinkering with Wayland compositors.",
       badge1: "Rust",
@@ -41,6 +43,11 @@ export const translations = {
       eyebrow: "Certifications & Milestones",
       title: "Achievements"
     },
+    score: {
+      eyebrow: "Secret Game",
+      title: "Score",
+      label: "Total Points"
+    },
     contact: {
       title: "Let's build something reliable.",
       desc: "Open to backend and systems engineering roles, Rust consulting, and interesting open source collaborations.",
@@ -53,6 +60,21 @@ export const translations = {
       telegramDesc: "Join my Telegram channel for software updates, Rust snippets, and tech thoughts.",
       telegramChannelBtn: "Telegram Channel",
       telegramChatBtn: "Chat with me"
+    },
+    contactModal: {
+      title: "Get In Touch",
+      telegramChannel: "Telegram Channel",
+      telegramChat: "Direct Telegram Chat",
+      sendEmail: "Send Email",
+      githubProfile: "GitHub Profile"
+    },
+    infoModal: {
+      title: "Site Specifications",
+      ownerLabel: "Owner:",
+      ownerName: "Pouya Aryani",
+      builtText: "Built with precision and engineering obsession",
+      versionLabel: "Site Version:",
+      githubSource: "View Source on GitHub"
     },
     secret: {
       score: "Score",
@@ -67,6 +89,7 @@ export const translations = {
       projects: "پروژه‌ها",
       skills: "مهارت‌ها",
       achievements: "دستاوردها",
+      score: "امتیاز",
       contact: "ارتباط"
     },
     hero: {
@@ -78,6 +101,7 @@ export const translations = {
     about: {
       eyebrow: "من کیستم",
       title: "درباره من",
+      name: "پویا آریانی",
       role: "// مهندس سیستم و بک‌اند، تمرکز بر روی Rust",
       bio: "من سیستم‌های بک‌اند سریع و قابل اعتمادی می‌سازم — عمدتاً با Rust و گاهی با Go — و همواره ارتباط نزدیکی با لایه‌های داخلی و مفاهیم لینوکس دارم. به درستی برنامه‌نویسی، کارایی سطح پایین و نرم‌افزاری که بدون مزاحمت کار کند اهمیت می‌دهم.",
       badge1: "Rust",
@@ -102,6 +126,11 @@ export const translations = {
       eyebrow: "گواهی‌ها و دستاوردها",
       title: "دستاوردها"
     },
+    score: {
+      eyebrow: "بازی مخفی",
+      title: "امتیاز",
+      label: "مجموع امتیازات"
+    },
     contact: {
       title: "بیایید با هم سیستمی قابل اعتماد بسازیم.",
       desc: "آماده همکاری در پروژه‌های مهندسی بک‌اند و سیستم، مشاوره Rust و پروژه‌های متن‌باز.",
@@ -114,6 +143,21 @@ export const translations = {
       telegramDesc: "عضو کانال تلگرام شوید تا از آخرین آپدیت‌های نرم‌افزاری، قطعه‌کدهای Rust و مقالات مطلع شوید.",
       telegramChannelBtn: "کانال تلگرام",
       telegramChatBtn: "چت با من"
+    },
+    contactModal: {
+      title: "ارتباط با من",
+      telegramChannel: "کانال تلگرام",
+      telegramChat: "چت مستقیم تلگرام",
+      sendEmail: "ارسال ایمیل",
+      githubProfile: "پروفایل گیت‌هاب"
+    },
+    infoModal: {
+      title: "مشخصات سایت",
+      ownerLabel: "مالک:",
+      ownerName: "پویا آریانی",
+      builtText: "ساخته شده با دقت و وسواس مهندسی",
+      versionLabel: "نسخه سایت:",
+      githubSource: "سورس‌کد در گیت‌هاب"
     },
     secret: {
       score: "امتیاز",
