@@ -5,6 +5,12 @@ A highly performant, modular, and responsive personal portfolio website. Designe
 > ⚡ **AI Redesigned & Optimized**  
 > This project has been refined with **AI-driven architectural design**, focusing on high-performance rendering (CSS Hardware Acceleration), sleek glassmorphism aesthetics, and a modular configuration system for seamless updates.
 
+<div align="center" style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+  <img src="/Demos/1.png" width="45%" style="min-width: 250px; border-radius: 10px; margin-bottom: 10px;">
+  <img src="/Demos/2.png" width="45%" style="min-width: 250px; border-radius: 10px; margin-bottom: 10px;">
+  <img src="/Demos/3.png" width="45%" style="min-width: 250px; border-radius: 10px;">
+  <img src="/Demos/4.png" width="45%" style="min-width: 250px; border-radius: 10px;">
+</div>
 
 ## 🎨 Core Features
 
@@ -42,6 +48,8 @@ Because this project uses ES Modules and local `fetch()` calls for JSON files, y
 │   └── skills/          # Technical skills
 ├── css/                 # Modular CSS styles
 ├── js/                  # Modular JavaScript logic
+├── minigame/
+├── font/
 └── index.html           # Main Application entry
 ```
 ## 📝 Configuration Examples
@@ -107,7 +115,7 @@ To ensure your project remains stable and performant, please follow these guidel
 
 ### 🙏 Support & Appreciation 
 
-**Thank you for your support!** ⭐
+**Thank you for your support!** 
 
-Building and maintaining open-source projects takes time and dedication. If you find this portfolio template useful for your own projects, please consider **starring** this repository. Your support helps me keep improving this template and adding more cool features. Thank you for being part of the open-source community!
+Building and maintaining open-source projects takes time and dedication. If you find this portfolio template useful for your own projects, please consider **starring** ⭐ this repository. Your support helps me keep improving this template and adding more cool features. Thank you for being part of the open-source community!
 
