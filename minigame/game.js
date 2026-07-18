@@ -3,6 +3,7 @@ const WORKER_URL = "https://leaderboard-worker.ppouyaaaryani.workers.dev";
 let siteMode = "modern";
 let highScore = 0;
 let userCode = "PL-" + Math.floor(1000 + Math.random() * 9000);
+let isMuted = false;
 
 try {
   siteMode = localStorage.getItem('site_mode') || 'modern';
@@ -45,9 +46,11 @@ const finalScoreVal = document.getElementById('finalScoreVal');
 const finalHighScoreVal = document.getElementById('finalHighScoreVal');
 const livesContainer = document.getElementById('livesContainer');
 const gameOverScreen = document.getElementById('gameOverScreen');
+const celebrationMessage = document.getElementById('celebrationMessage');
 const leaderboardRows = document.getElementById('leaderboardRows');
 const restartBtn = document.getElementById('restartBtn');
 const exitBtn = document.getElementById('exitBtn');
+const soundBtn = document.getElementById('soundBtn');
 
 let W = window.innerWidth || 360;
 let H = window.innerHeight || 640;
@@ -68,8 +71,6 @@ let screenShake = 0;
 let countdownInterval = null;
 let autoExitTime = 5;
 
-let stars = [];
-
 if (highScoreVal) highScoreVal.textContent = highScore;
 
 const SoundEngine = {
@@ -83,8 +84,9 @@ const SoundEngine = {
     }
   },
   playCoin() {
+    if (isMuted) return;
     this.init();
-    if (!this.ctx) return;
+    if (!this.ctx || this.ctx.state === 'suspended') return;
     const now = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
@@ -99,8 +101,9 @@ const SoundEngine = {
     osc.stop(now + 0.2);
   },
   playHit() {
+    if (isMuted) return;
     this.init();
-    if (!this.ctx) return;
+    if (!this.ctx || this.ctx.state === 'suspended') return;
     const now = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
@@ -115,8 +118,9 @@ const SoundEngine = {
     osc.stop(now + 0.3);
   },
   playPowerup() {
+    if (isMuted) return;
     this.init();
-    if (!this.ctx) return;
+    if (!this.ctx || this.ctx.state === 'suspended') return;
     const now = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
@@ -132,40 +136,24 @@ const SoundEngine = {
   }
 };
 
+if (soundBtn) {
+  soundBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    isMuted = !isMuted;
+    soundBtn.textContent = isMuted ? "🔇" : "🔊";
+    if (!isMuted) {
+      SoundEngine.init();
+    }
+  });
+}
+
 function unlockAudio() {
-  SoundEngine.init();
+  if (!isMuted) SoundEngine.init();
   window.removeEventListener('click', unlockAudio);
   window.removeEventListener('touchstart', unlockAudio);
 }
 window.addEventListener('click', unlockAudio);
 window.addEventListener('touchstart', unlockAudio);
-
-function initStars() {
-  stars = [];
-  const count = W < 600 ? 20 : 45;
-  for (let i = 0; i < count; i++) {
-    stars.push({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      size: Math.random() * 1.5 + 0.5,
-      speed: Math.random() * 1.0 + 0.4
-    });
-  }
-}
-
-function updateAndDrawStars() {
-  if (!ctx) return;
-  for (let i = 0; i < stars.length; i++) {
-    let s = stars[i];
-    s.y += s.speed * (coinRainTimer > 0 ? 3.0 : 1.0);
-    if (s.y > H) {
-      s.y = 0;
-      s.x = Math.random() * W;
-    }
-    ctx.fillStyle = isClassicMode ? '#ffffff' : 'rgba(232, 236, 241, 0.3)';
-    ctx.fillRect(s.x, s.y, s.size, s.size);
-  }
-}
 
 function resize() {
   W = window.innerWidth || 360;
@@ -178,7 +166,6 @@ function resize() {
     canvas.style.width = W + 'px';
     canvas.style.height = H + 'px';
   }
-  initStars();
 }
 window.addEventListener('resize', resize);
 resize();
@@ -251,6 +238,22 @@ async function fetchAndRenderLeaderboard() {
     if (topThree.length === 0) {
       leaderboardRows.innerHTML = '<div class="loading-text">NO SCORES YET</div>';
       return;
+    }
+
+    let qualifiesTopThree = false;
+    if (topThree.length < 3 && score > 0) {
+      qualifiesTopThree = true;
+    } else if (topThree.length >= 3 && score >= topThree[2].score) {
+      qualifiesTopThree = true;
+    }
+
+    if (celebrationMessage) {
+      if (qualifiesTopThree) {
+        celebrationMessage.textContent = "🏆 NEW TOP 3 PILOT RANKED!";
+        celebrationMessage.style.display = "block";
+      } else {
+        celebrationMessage.style.display = "none";
+      }
     }
 
     topThree.forEach((pilot, index) => {
@@ -405,8 +408,8 @@ class Obstacle {
     this.speedMultiplier = speedMultiplier;
     this.isHoming = isHoming;
 
-    this.vy = (2.4 + Math.random() * 1.8) * speedMultiplier;
-    this.vx = (Math.random() - 0.5) * (speedMultiplier > 1.4 ? 2.2 : 0.7);
+    this.vy = (2.4 + Math.random() * 1.5) * speedMultiplier;
+    this.vx = (Math.random() - 0.5) * (speedMultiplier > 1.4 ? 2.0 : 0.6);
   }
 
   update() {
@@ -481,7 +484,7 @@ class Collectible {
     this.radius = isMobile ? 12 : 15;
     this.x = forcedX !== null ? forcedX : Math.random() * (W - 80) + 40;
     this.y = -this.radius - 20;
-    this.vy = (2.2 + Math.random() * 2.2) * (1 + score * 0.004);
+    this.vy = (2.2 + Math.random() * 2.0) * (1 + score * 0.003);
     this.pulse = Math.random() * Math.PI;
   }
 
@@ -712,15 +715,11 @@ window.addEventListener('keydown', (e) => {
 });
 
 function getDifficulty() {
-  if (score < 15) return { speed: 1.0, spawnRate: 40 };
-  if (score < 30) return { speed: 1.6, spawnRate: 26 };
-  if (score < 60) return { speed: 2.4, spawnRate: 18 };
-  
-  const extra = score - 60;
-  return {
-    speed: 2.4 + extra * 0.045,
-    spawnRate: Math.max(5, 18 - extra * 0.18)
-  };
+  if (score < 20) return { speed: 1.0, spawnRate: 46 };
+  if (score < 50) return { speed: 1.3, spawnRate: 34 };
+  if (score < 100) return { speed: 1.6, spawnRate: 26 };
+  if (score < 200) return { speed: 1.9, spawnRate: 20 };
+  return { speed: 2.2, spawnRate: 16 };
 }
 
 function gameLoop() {
@@ -737,8 +736,6 @@ function gameLoop() {
 
   ctx.clearRect(0, 0, W, H);
 
-  updateAndDrawStars();
-
   const diff = getDifficulty();
   spawnCounter++;
 
@@ -747,8 +744,8 @@ function gameLoop() {
     if (score >= 70 && score >= nextHomingScore) {
       isHoming = true;
       const interval = score >= 150 
-        ? Math.floor(Math.random() * 3) + 2 
-        : Math.floor(Math.random() * 7) + 3;
+        ? Math.floor(Math.random() * 4) + 3 
+        : Math.floor(Math.random() * 8) + 4;
       nextHomingScore = score + interval;
     }
     obstacles.push(new Obstacle(diff.speed, isHoming));
@@ -918,7 +915,6 @@ function startGame() {
   W = window.innerWidth || 360;
   H = window.innerHeight || 640;
   player = new Player();
-  initStars();
 
   if (countdownInterval) clearInterval(countdownInterval);
   if (gameOverScreen) gameOverScreen.classList.remove('active');

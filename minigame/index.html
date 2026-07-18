@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Space Runner — Mini Game</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -30,13 +30,17 @@
       </div>
     </div>
 
-    <div class="hud-item">
-      <span class="hud-label">HIGH SCORE</span>
-      <span id="highScoreVal">0</span>
+    <div class="hud-right-group">
+      <button id="soundBtn" class="sound-btn">🔊</button>
+      <div class="hud-item">
+        <span class="hud-label">HIGH SCORE</span>
+        <span id="highScoreVal">0</span>
+      </div>
     </div>
   </div>
 
   <div id="gameOverScreen" class="overlay-screen">
+    <div id="celebrationMessage" class="celebration-badge"></div>
     <h1 class="danger">GAME OVER</h1>
     
     <div class="stats-display">

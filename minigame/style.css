@@ -45,9 +45,14 @@ body, html, #gameContainer, #gameCanvas {
   z-index: 10;
 }
 
-.hud-group {
+.hud-group, .hud-right-group {
   display: flex;
   gap: 12px;
+  align-items: center;
+}
+
+.hud-right-group {
+  pointer-events: auto;
 }
 
 .hud-item {
@@ -59,6 +64,25 @@ body, html, #gameContainer, #gameCanvas {
   padding: 8px 16px;
   border-radius: 12px;
   backdrop-filter: blur(10px);
+}
+
+.sound-btn {
+  background: rgba(18, 22, 36, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-size: 1.1rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  display: grid;
+  place-items: center;
+  transition: background 0.2s;
+}
+
+.sound-btn:active {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .hud-label {
@@ -112,7 +136,6 @@ body, html, #gameContainer, #gameCanvas {
   height: 18px;
   fill: #ff5252;
   filter: drop-shadow(0 0 6px rgba(255, 82, 82, 0.6));
-  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .heart-icon.lost {
@@ -139,7 +162,7 @@ body, html, #gameContainer, #gameCanvas {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 16px;
   z-index: 20;
   opacity: 0;
   pointer-events: none;
@@ -160,6 +183,26 @@ body, html, #gameContainer, #gameCanvas {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 30px rgba(255, 82, 82, 0.4);
+  margin-bottom: 5px;
+}
+
+.celebration-badge {
+  display: none;
+  background: linear-gradient(90deg, #ffd700, #ffa500);
+  color: #040408;
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  font-size: 0.8rem;
+  padding: 8px 20px;
+  border-radius: 30px;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  animation: bounce 1s infinite alternate;
+  letter-spacing: 0.05em;
+}
+
+@keyframes bounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-6px); }
 }
 
 .stats-display {
@@ -225,15 +268,13 @@ body, html, #gameContainer, #gameCanvas {
   padding: 4px 0;
 }
 
-.rank-tag {
+.rank-tag, .pilot-platform {
   font-weight: bold;
   color: #ffd700;
-  margin-right: 6px;
 }
 
-.pilot-platform {
-  color: #ffd700;
-  font-weight: bold;
+.rank-tag {
+  margin-right: 6px;
 }
 
 .pilot-score {
@@ -320,18 +361,54 @@ body, html, #gameContainer, #gameCanvas {
   transform: translateY(-2px);
 }
 
+@media (max-width: 410px) {
+  #hud {
+    top: 12px;
+    left: 10px;
+    right: 10px;
+  }
+  .hud-group, .hud-right-group {
+    gap: 6px;
+  }
+  .hud-item {
+    padding: 6px 10px;
+    border-radius: 10px;
+  }
+  .sound-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 0.95rem;
+    border-radius: 10px;
+  }
+  .hud-item #scoreVal, 
+  .hud-item #highScoreVal {
+    font-size: 1.1rem;
+  }
+  .hud-coin {
+    width: 18px;
+    height: 18px;
+  }
+  .heart-icon {
+    width: 14px;
+    height: 14px;
+  }
+  #identityFooter {
+    bottom: 12px;
+    font-size: 0.65rem;
+    padding: 4px 10px;
+  }
+}
+
 body.classic-mode {
   background-color: #008080 !important;
   font-family: 'Tahoma', sans-serif !important;
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
 }
 
 body.classic-mode #gameCanvas {
   background: #000000 !important;
 }
 
-body.classic-mode .hud-item {
+body.classic-mode .hud-item, body.classic-mode .sound-btn {
   background: #c0c0c0 !important;
   border-top: 2px solid #ffffff !important;
   border-left: 2px solid #ffffff !important;
@@ -339,10 +416,20 @@ body.classic-mode .hud-item {
   border-bottom: 2px solid #000000 !important;
   border-radius: 0 !important;
   backdrop-filter: none !important;
+  color: #000000 !important;
 }
 
-body.classic-mode .hud-label {
+body.classic-mode .hud-label,
+body.classic-mode .stats-label,
+body.classic-mode .stats-value,
+body.classic-mode .leaderboard-title,
+body.classic-mode .rank-tag,
+body.classic-mode .pilot-platform,
+body.classic-mode .pilot-score,
+body.classic-mode .loading-text,
+body.classic-mode #identityFooter {
   color: #000000 !important;
+  font-family: 'Tahoma', sans-serif !important;
   font-weight: bold !important;
 }
 
@@ -372,7 +459,6 @@ body.classic-mode .overlay-screen {
   border-right: 3px solid #000000 !important;
   border-bottom: 3px solid #000000 !important;
   backdrop-filter: none !important;
-  border-radius: 0 !important;
 }
 
 body.classic-mode .overlay-screen h1.danger {
@@ -391,19 +477,6 @@ body.classic-mode .leaderboard-box {
   border-right: 2px solid #ffffff !important;
   border-bottom: 2px solid #ffffff !important;
   border-radius: 0 !important;
-}
-
-body.classic-mode .stats-label,
-body.classic-mode .stats-value,
-body.classic-mode .leaderboard-title,
-body.classic-mode .rank-tag,
-body.classic-mode .pilot-platform,
-body.classic-mode .pilot-score,
-body.classic-mode .loading-text,
-body.classic-mode #identityFooter {
-  color: #000000 !important;
-  font-family: 'Tahoma', sans-serif !important;
-  font-weight: bold !important;
 }
 
 body.classic-mode #identityField {
@@ -429,4 +502,11 @@ body.classic-mode .game-btn:hover {
   box-shadow: none !important;
   transform: none !important;
   background: #d8d8d8 !important;
+}
+
+body.classic-mode .celebration-badge {
+  border: 2px dashed #000000 !important;
+  border-radius: 0 !important;
+  background: #ffd700 !important;
+  box-shadow: none !important;
 }
