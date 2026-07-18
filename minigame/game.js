@@ -15,7 +15,11 @@ try {
     userCode = storedCode;
   }
 } catch (storageError) {
-  console.warn("Storage access is restricted. Using ephemeral ID.");
+  if (window.name && window.name.startsWith("PL-")) {
+    userCode = window.name;
+  } else {
+    window.name = userCode;
+  }
 }
 
 const identityField = document.getElementById('identityField');
@@ -23,7 +27,7 @@ if (identityField) identityField.textContent = userCode;
 
 const identityFooter = document.getElementById('identityFooter');
 if (identityFooter) {
-  identityFooter.style.zIndex = "999";
+  identityFooter.style.zIndex = "9999";
   identityFooter.style.pointerEvents = "none";
 }
 
@@ -170,7 +174,7 @@ function resize() {
     const dpr = window.devicePixelRatio || 1;
     canvas.width = W * dpr;
     canvas.height = H * dpr;
-    ctx.scale(dpr, dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     canvas.style.width = W + 'px';
     canvas.style.height = H + 'px';
   }
@@ -687,8 +691,7 @@ let effectParticles = [];
 let spawnCounter = 0;
 
 function handleInput(e) {
-  if (!isPlaying || typeof player === 'undefined') return;
-  if (e.cancelable) e.preventDefault();
+  if (!isPlaying || typeof player === 'undefined' || !player) return;
   const clientX = e.touches ? e.touches[0].clientX : e.clientX;
   const clientY = e.touches ? e.touches[0].clientY : e.clientY;
   player.targetX = clientX;
@@ -696,11 +699,11 @@ function handleInput(e) {
 }
 
 window.addEventListener('mousemove', handleInput);
-window.addEventListener('touchstart', handleInput, { passive: false });
-window.addEventListener('touchmove', handleInput, { passive: false });
+window.addEventListener('touchstart', handleInput);
+window.addEventListener('touchmove', handleInput);
 
 window.addEventListener('keydown', (e) => {
-  if (!isPlaying || typeof player === 'undefined') return;
+  if (!isPlaying || typeof player === 'undefined' || !player) return;
   const step = 28;
   if (e.key === 'ArrowLeft' || e.key === 'a') player.targetX -= step;
   if (e.key === 'ArrowRight' || e.key === 'd') player.targetX += step;
