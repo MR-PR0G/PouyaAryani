@@ -229,8 +229,8 @@ body, html {
 }
 
 .pilot-platform {
-  color: #8892a0;
-  font-size: 0.68rem;
+  color: #ffd700;
+  font-weight: bold;
 }
 
 .pilot-score {
@@ -244,6 +244,23 @@ body, html {
   color: #8892a0;
   text-align: center;
   animation: pulse 1.5s infinite;
+}
+
+#identityFooter {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.68rem;
+  font-weight: bold;
+  color: rgba(136, 146, 160, 0.6);
+  letter-spacing: 0.05em;
+  pointer-events: none;
+  z-index: 10;
+}
+
+#identityField {
+  color: #4fd8e8;
 }
 
 @keyframes pulse {
@@ -293,7 +310,6 @@ body, html {
   transform: translateY(-2px);
 }
 
-/* CLASSIC PIXELATED MODE OVERRIDES */
 body.classic-mode {
   background-color: #008080 !important;
   font-family: 'Tahoma', sans-serif !important;
@@ -373,10 +389,15 @@ body.classic-mode .leaderboard-title,
 body.classic-mode .rank-tag,
 body.classic-mode .pilot-platform,
 body.classic-mode .pilot-score,
-body.classic-mode .loading-text {
+body.classic-mode .loading-text,
+body.classic-mode #identityFooter {
   color: #000000 !important;
   font-family: 'Tahoma', sans-serif !important;
   font-weight: bold !important;
+}
+
+body.classic-mode #identityField {
+  color: #000080 !important;
 }
 
 body.classic-mode .leaderboard-title {

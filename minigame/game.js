@@ -1,13 +1,26 @@
 const WORKER_URL = "https://leaderboard-worker.ppouyaaaryani.workers.dev";
+
 let siteMode = "modern";
 let highScore = 0;
+let userCode = "PL-0000";
 
 try {
   siteMode = localStorage.getItem('site_mode') || 'modern';
   highScore = parseInt(localStorage.getItem('minigame_highscore') || '0', 10);
+  
+  let storedCode = localStorage.getItem('minigame_user_code');
+  if (!storedCode) {
+    const randNum = Math.floor(1000 + Math.random() * 9000);
+    storedCode = `PL-${randNum}`;
+    localStorage.setItem('minigame_user_code', storedCode);
+  }
+  userCode = storedCode;
 } catch (storageError) {
-  console.warn("Storage access is restricted or unsupported in this environment.");
+  console.warn("Storage access is restricted.");
 }
+
+const identityField = document.getElementById('identityField');
+if (identityField) identityField.textContent = userCode;
 
 const isClassicMode = siteMode === 'classic';
 if (isClassicMode) {
@@ -27,8 +40,8 @@ const leaderboardRows = document.getElementById('leaderboardRows');
 const restartBtn = document.getElementById('restartBtn');
 const exitBtn = document.getElementById('exitBtn');
 
-let W = window.innerWidth;
-let H = window.innerHeight;
+let W = window.innerWidth || 360;
+let H = window.innerHeight || 640;
 let isPlaying = false;
 let animationFrameId = null;
 
@@ -56,6 +69,9 @@ const SoundEngine = {
     if (!this.ctx) {
       this.ctx = new (window.AudioContext || window.webkitAudioContext)();
     }
+    if (this.ctx && this.ctx.state === 'suspended') {
+      this.ctx.resume();
+    }
   },
   playCoin() {
     this.init();
@@ -66,12 +82,12 @@ const SoundEngine = {
     osc.type = 'sine';
     osc.frequency.setValueAtTime(587.33, now);
     osc.frequency.setValueAtTime(880, now + 0.08);
-    gain.gain.setValueAtTime(0.1, now);
-    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+    gain.gain.setValueAtTime(0.08, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
     osc.connect(gain);
     gain.connect(this.ctx.destination);
     osc.start(now);
-    osc.stop(now + 0.25);
+    osc.stop(now + 0.2);
   },
   playHit() {
     this.init();
@@ -80,14 +96,14 @@ const SoundEngine = {
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
     osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(180, now);
-    osc.frequency.linearRampToValueAtTime(60, now + 0.4);
-    gain.gain.setValueAtTime(0.25, now);
-    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+    osc.frequency.setValueAtTime(160, now);
+    osc.frequency.linearRampToValueAtTime(50, now + 0.3);
+    gain.gain.setValueAtTime(0.15, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
     osc.connect(gain);
     gain.connect(this.ctx.destination);
     osc.start(now);
-    osc.stop(now + 0.4);
+    osc.stop(now + 0.3);
   },
   playPowerup() {
     this.init();
@@ -97,58 +113,61 @@ const SoundEngine = {
     const gain = this.ctx.createGain();
     osc.type = 'triangle';
     osc.frequency.setValueAtTime(260, now);
-    osc.frequency.exponentialRampToValueAtTime(1100, now + 0.35);
-    gain.gain.setValueAtTime(0.15, now);
-    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+    osc.frequency.exponentialRampToValueAtTime(900, now + 0.3);
+    gain.gain.setValueAtTime(0.1, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
     osc.connect(gain);
     gain.connect(this.ctx.destination);
     osc.start(now);
-    osc.stop(now + 0.35);
+    osc.stop(now + 0.3);
   }
 };
 
+function unlockAudio() {
+  SoundEngine.init();
+  window.removeEventListener('click', unlockAudio);
+  window.removeEventListener('touchstart', unlockAudio);
+}
+window.addEventListener('click', unlockAudio);
+window.addEventListener('touchstart', unlockAudio);
+
 function initStars() {
   stars = [];
-  const count = W < 600 ? 25 : 55;
+  const count = W < 600 ? 20 : 45;
   for (let i = 0; i < count; i++) {
     stars.push({
       x: Math.random() * W,
       y: Math.random() * H,
-      size: Math.random() * 1.8 + 0.4,
-      speed: Math.random() * 1.2 + 0.4
+      size: Math.random() * 1.5 + 0.5,
+      speed: Math.random() * 1.0 + 0.4
     });
   }
 }
 
 function updateAndDrawStars() {
   if (!ctx) return;
-  ctx.save();
   for (let i = 0; i < stars.length; i++) {
     let s = stars[i];
-    let currentSpeed = s.speed * (coinRainTimer > 0 ? 3.5 : 1.0);
-    s.y += currentSpeed;
-    
+    s.y += s.speed * (coinRainTimer > 0 ? 3.0 : 1.0);
     if (s.y > H) {
       s.y = 0;
       s.x = Math.random() * W;
     }
-    
-    if (isClassicMode) {
-      ctx.fillStyle = '#ffffff';
-    } else {
-      ctx.fillStyle = `rgba(232, 236, 241, ${coinRainTimer > 0 ? 0.7 : 0.35})`;
-    }
+    ctx.fillStyle = isClassicMode ? '#ffffff' : 'rgba(232, 236, 241, 0.3)';
     ctx.fillRect(s.x, s.y, s.size, s.size);
   }
-  ctx.restore();
 }
 
 function resize() {
-  W = window.innerWidth;
-  H = window.innerHeight;
-  if (canvas) {
-    canvas.width = W;
-    canvas.height = H;
+  W = window.innerWidth || 360;
+  H = window.innerHeight || 640;
+  if (canvas && ctx) {
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    ctx.scale(dpr, dpr);
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
   }
   initStars();
 }
@@ -180,8 +199,7 @@ async function sendTelemetryData(finalScore) {
 
     const telemetry = {
       score: finalScore,
-      platform: navigator.platform || 'Unknown',
-      userAgent: navigator.userAgent || 'Unknown',
+      userCode: userCode,
       screenResolution: `${window.screen.width}x${window.screen.height}`
     };
 
@@ -224,11 +242,10 @@ async function fetchAndRenderLeaderboard() {
     topThree.forEach((pilot, index) => {
       const row = document.createElement('div');
       row.className = 'leaderboard-row';
-      const cleanPlatform = pilot.platform.split(' ')[0].substring(0, 10);
       row.innerHTML = `
         <div>
           <span class="rank-tag">#${index + 1}</span>
-          <span class="pilot-platform">${cleanPlatform}</span>
+          <span class="pilot-platform">${pilot.userCode || 'ANON'}</span>
         </div>
         <span class="pilot-score">${pilot.score}</span>
       `;
@@ -244,13 +261,12 @@ class VisualParticles {
     this.x = x;
     this.y = y;
     this.radius = 1;
-    this.maxRadius = 65;
     this.alpha = 1;
     this.color = color;
   }
   update() {
-    this.radius += 3.2;
-    this.alpha -= 0.025;
+    this.radius += 3.5;
+    this.alpha -= 0.03;
   }
   draw() {
     if (this.alpha <= 0 || !ctx) return;
@@ -279,7 +295,7 @@ class Player {
     this.y = H - 120;
     this.targetX = this.x;
     this.targetY = this.y;
-    this.speed = 0.22;
+    this.speed = 0.25;
   }
 
   update() {
@@ -304,18 +320,13 @@ class Player {
         ctx.lineWidth = 1;
         ctx.strokeRect(-this.height, -this.height, this.height * 2, this.height * 2);
       } else {
-        ctx.shadowBlur = 20;
-        ctx.shadowColor = '#ffd700';
+        ctx.fillStyle = 'rgba(255, 215, 0, 0.1)';
         ctx.beginPath();
-        ctx.arc(0, 0, this.height * 1.15, 0, Math.PI * 2);
-        ctx.strokeStyle = '#ffd700';
-        ctx.lineWidth = 2;
-        ctx.setLineDash([6, 6]);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.arc(0, 0, this.height * 1.05, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255, 215, 0, 0.12)';
+        ctx.arc(0, 0, this.height * 1.1, 0, Math.PI * 2);
         ctx.fill();
+        ctx.strokeStyle = '#ffd700';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
       }
       ctx.restore();
     }
@@ -328,17 +339,13 @@ class Player {
         ctx.lineWidth = 1;
         ctx.strokeRect(-this.height * 0.9, -this.height * 0.9, this.height * 1.8, this.height * 1.8);
       } else {
-        ctx.shadowBlur = 20;
-        ctx.shadowColor = '#5b8cff';
+        ctx.fillStyle = 'rgba(91, 140, 255, 0.12)';
         ctx.beginPath();
         ctx.arc(0, 0, this.height * 0.95, 0, Math.PI * 2);
-        ctx.strokeStyle = '#5b8cff';
-        ctx.lineWidth = 3;
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.arc(0, 0, this.height * 0.85, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(91, 140, 255, 0.15)';
         ctx.fill();
+        ctx.strokeStyle = '#5b8cff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
       }
       ctx.restore();
     }
@@ -356,25 +363,20 @@ class Player {
       ctx.fillStyle = '#ff0000';
       ctx.fillRect(-4, 16, 8, 6);
     } else {
-      ctx.shadowBlur = 14;
-      ctx.shadowColor = '#4fd8e8';
-
       ctx.beginPath();
       ctx.moveTo(0, -this.height / 2);
       ctx.lineTo(this.width / 2, this.height / 2);
       ctx.lineTo(0, this.height / 3);
       ctx.lineTo(-this.width / 2, this.height / 2);
       ctx.closePath();
-
       ctx.fillStyle = '#4fd8e8';
       ctx.fill();
 
       ctx.beginPath();
-      ctx.arc(0, this.height / 3 + 3, 3 + Math.random() * 3, 0, Math.PI * 2);
+      ctx.arc(0, this.height / 3 + 3, 4, 0, Math.PI * 2);
       ctx.fillStyle = '#ff7a52';
       ctx.fill();
     }
-
     ctx.restore();
   }
 }
@@ -383,14 +385,14 @@ class Obstacle {
   constructor(speedMultiplier, isHoming = false) {
     const isMobile = W < 600;
     const scale = isMobile ? 0.65 : 1.0;
-    this.radius = (isHoming ? 16 : 12 + Math.random() * 10) * scale;
+    this.radius = (isHoming ? 15 : 11 + Math.random() * 9) * scale;
     this.x = Math.random() * (W - 60) + 30;
     this.y = -this.radius - 20;
     this.speedMultiplier = speedMultiplier;
     this.isHoming = isHoming;
 
-    this.vy = (2.2 + Math.random() * 2) * speedMultiplier;
-    this.vx = (Math.random() - 0.5) * (speedMultiplier > 1.4 ? 2.5 : 0.8);
+    this.vy = (2.4 + Math.random() * 1.8) * speedMultiplier;
+    this.vx = (Math.random() - 0.5) * (speedMultiplier > 1.4 ? 2.2 : 0.7);
   }
 
   update() {
@@ -399,12 +401,12 @@ class Obstacle {
       const targetDy = player.y - this.y;
       const targetDist = Math.hypot(targetDx, targetDy) || 1;
       
-      const targetSpeed = (2.6 + Math.random() * 1.0) * this.speedMultiplier;
+      const targetSpeed = (2.6 + Math.random() * 0.8) * this.speedMultiplier;
       const idealVx = (targetDx / targetDist) * targetSpeed;
       const idealVy = Math.max(2.0, (targetDy / targetDist) * targetSpeed);
 
-      this.vx += (idealVx - this.vx) * 0.045;
-      this.vy += (idealVy - this.vy) * 0.045;
+      this.vx += (idealVx - this.vx) * 0.05;
+      this.vy += (idealVy - this.vy) * 0.05;
     }
 
     this.y += this.vy;
@@ -428,45 +430,33 @@ class Obstacle {
       ctx.strokeStyle = '#000000';
       ctx.strokeRect(-this.radius, -this.radius, size, size);
     } else {
-      const grad = ctx.createRadialGradient(
-        -this.radius * 0.25,
-        -this.radius * 0.25,
-        this.radius * 0.08,
-        0,
-        0,
-        this.radius
-      );
-
       if (this.isHoming) {
-        grad.addColorStop(0, '#ffaae0');
-        grad.addColorStop(0.25, '#ff0066');
-        grad.addColorStop(0.8, '#880022');
-        grad.addColorStop(1, '#330008');
-        ctx.shadowBlur = 18;
-        ctx.shadowColor = 'rgba(255, 0, 102, 0.75)';
+        ctx.fillStyle = 'rgba(255, 0, 102, 0.15)';
+        ctx.beginPath();
+        ctx.arc(0, 0, this.radius + 5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#ff0055';
+        ctx.beginPath();
+        ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
+        ctx.fill();
       } else {
-        grad.addColorStop(0, '#ffa3a3');
-        grad.addColorStop(0.25, '#ee2222');
-        grad.addColorStop(0.8, '#770000');
-        grad.addColorStop(1, '#330000');
-        ctx.shadowBlur = 12;
-        ctx.shadowColor = 'rgba(238, 34, 34, 0.45)';
+        ctx.fillStyle = 'rgba(238, 34, 34, 0.12)';
+        ctx.beginPath();
+        ctx.arc(0, 0, this.radius + 4, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#ee2222';
+        ctx.beginPath();
+        ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
+        ctx.fill();
       }
 
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.15)';
       ctx.beginPath();
-      ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
-      ctx.fillStyle = grad;
-      ctx.fill();
-
-      ctx.fillStyle = this.isHoming ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.18)';
-      ctx.beginPath();
-      ctx.arc(-this.radius * 0.3, this.radius * 0.2, this.radius * 0.25, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.beginPath();
-      ctx.arc(this.radius * 0.4, -this.radius * 0.3, this.radius * 0.18, 0, Math.PI * 2);
+      ctx.arc(-this.radius * 0.2, this.radius * 0.2, this.radius * 0.2, 0, Math.PI * 2);
       ctx.fill();
     }
-
     ctx.restore();
   }
 }
@@ -474,10 +464,10 @@ class Obstacle {
 class Collectible {
   constructor(speedMultiplier, forcedX = null) {
     const isMobile = W < 600;
-    this.radius = isMobile ? 12 : 16;
+    this.radius = isMobile ? 12 : 15;
     this.x = forcedX !== null ? forcedX : Math.random() * (W - 80) + 40;
     this.y = -this.radius - 20;
-    this.vy = (2.0 + Math.random() * 2.5) * (1 + score * 0.005);
+    this.vy = (2.2 + Math.random() * 2.2) * (1 + score * 0.004);
     this.pulse = Math.random() * Math.PI;
   }
 
@@ -486,8 +476,8 @@ class Collectible {
       const dx = player.x - this.x;
       const dy = player.y - this.y;
       const dist = Math.hypot(dx, dy) || 1;
-      this.x += (dx / dist) * 10.5;
-      this.y += (dy / dist) * 10.5;
+      this.x += (dx / dist) * 11.0;
+      this.y += (dy / dist) * 11.0;
     } else {
       this.y += this.vy;
     }
@@ -517,19 +507,20 @@ class Collectible {
         ctx.fillText('PA', 0, 0);
       }
     } else {
-      const scale = 1 + Math.sin(this.pulse) * 0.08;
+      const scale = 1 + Math.sin(this.pulse) * 0.06;
       ctx.scale(scale, scale);
 
-      ctx.shadowBlur = 12;
-      ctx.shadowColor = '#ffd700';
+      ctx.fillStyle = 'rgba(255, 215, 0, 0.15)';
+      ctx.beginPath();
+      ctx.arc(0, 0, this.radius + 3, 0, Math.PI * 2);
+      ctx.fill();
 
       ctx.beginPath();
       ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
       ctx.fillStyle = '#0a0e1a';
       ctx.fill();
-
-      ctx.lineWidth = 1;
       ctx.strokeStyle = '#ffd700';
+      ctx.lineWidth = 1.5;
       ctx.stroke();
 
       if (isLogoLoaded) {
@@ -541,13 +532,12 @@ class Collectible {
         ctx.restore();
       } else {
         ctx.fillStyle = '#ffd700';
-        ctx.font = '700 11px Sora';
+        ctx.font = '700 10px Sora';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText('PA', 0, 0);
       }
     }
-
     ctx.restore();
   }
 }
@@ -555,18 +545,12 @@ class Collectible {
 class ShieldPowerup {
   constructor(speedMultiplier) {
     const isMobile = W < 600;
-    this.radius = isMobile ? 12 : 15;
+    this.radius = isMobile ? 12 : 14;
     this.x = Math.random() * (W - 80) + 40;
     this.y = -this.radius - 20;
-    this.vy = (1.8 + Math.random() * 1.2) * speedMultiplier;
-    this.pulse = 0;
+    this.vy = (1.8 + Math.random() * 1.0) * speedMultiplier;
   }
-
-  update() {
-    this.y += this.vy;
-    this.pulse += 0.08;
-  }
-
+  update() { this.y += this.vy; }
   draw() {
     if (!ctx) return;
     ctx.save();
@@ -585,25 +569,15 @@ class ShieldPowerup {
       ctx.textBaseline = 'middle';
       ctx.fillText('S', 0, 0);
     } else {
-      ctx.shadowBlur = 16;
-      ctx.shadowColor = '#5b8cff';
-
-      ctx.beginPath();
-      ctx.arc(0, 0, this.radius + Math.sin(this.pulse) * 2, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(91, 140, 255, 0.3)';
-      ctx.fill();
-
+      ctx.fillStyle = '#5b8cff';
       ctx.beginPath();
       ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
-      ctx.fillStyle = '#5b8cff';
       ctx.fill();
-
-      ctx.beginPath();
-      ctx.arc(-3, -3, 4, 0, Math.PI * 2);
       ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(-2, -2, 3, 0, Math.PI * 2);
       ctx.fill();
     }
-
     ctx.restore();
   }
 }
@@ -611,18 +585,12 @@ class ShieldPowerup {
 class MagnetPowerup {
   constructor(speedMultiplier) {
     const isMobile = W < 600;
-    this.radius = isMobile ? 12 : 15;
+    this.radius = isMobile ? 12 : 14;
     this.x = Math.random() * (W - 80) + 40;
     this.y = -this.radius - 20;
-    this.vy = (2.0 + Math.random() * 1.5) * speedMultiplier;
-    this.pulse = 0;
+    this.vy = (2.0 + Math.random() * 1.2) * speedMultiplier;
   }
-
-  update() {
-    this.y += this.vy;
-    this.pulse += 0.1;
-  }
-
+  update() { this.y += this.vy; }
   draw() {
     if (!ctx) return;
     ctx.save();
@@ -641,26 +609,16 @@ class MagnetPowerup {
       ctx.textBaseline = 'middle';
       ctx.fillText('M', 0, 0);
     } else {
-      ctx.shadowBlur = 18;
-      ctx.shadowColor = '#ffd700';
-
-      ctx.beginPath();
-      ctx.arc(0, 0, this.radius + Math.sin(this.pulse) * 2.5, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(255, 215, 0, 0.25)';
-      ctx.fill();
-
+      ctx.fillStyle = '#ffd700';
       ctx.beginPath();
       ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
-      ctx.fillStyle = '#ffd700';
       ctx.fill();
-
       ctx.fillStyle = '#040408';
-      ctx.font = '800 12px Sora';
+      ctx.font = '800 11px Sora';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText('M', 0, 0);
     }
-
     ctx.restore();
   }
 }
@@ -668,10 +626,10 @@ class MagnetPowerup {
 class RainPowerup {
   constructor(speedMultiplier) {
     const isMobile = W < 600;
-    this.radius = isMobile ? 13 : 16;
+    this.radius = isMobile ? 12 : 15;
     this.x = Math.random() * (W - 80) + 40;
     this.y = -this.radius - 20;
-    this.vy = (1.9 + Math.random() * 1.4) * speedMultiplier;
+    this.vy = (1.9 + Math.random() * 1.2) * speedMultiplier;
     this.rotation = 0;
   }
   update() {
@@ -696,8 +654,6 @@ class RainPowerup {
       ctx.textBaseline = 'middle';
       ctx.fillText('R', 0, 0);
     } else {
-      ctx.shadowBlur = 22;
-      ctx.shadowColor = '#d946ef';
       ctx.fillStyle = '#d946ef';
       ctx.beginPath();
       for (let i = 0; i < 5; i++) {
@@ -722,6 +678,7 @@ let spawnCounter = 0;
 
 function handleInput(e) {
   if (!isPlaying || typeof player === 'undefined') return;
+  if (e.cancelable) e.preventDefault();
   const clientX = e.touches ? e.touches[0].clientX : e.clientX;
   const clientY = e.touches ? e.touches[0].clientY : e.clientY;
   player.targetX = clientX;
@@ -729,7 +686,8 @@ function handleInput(e) {
 }
 
 window.addEventListener('mousemove', handleInput);
-window.addEventListener('touchmove', handleInput, { passive: true });
+window.addEventListener('touchstart', handleInput, { passive: false });
+window.addEventListener('touchmove', handleInput, { passive: false });
 
 window.addEventListener('keydown', (e) => {
   if (!isPlaying || typeof player === 'undefined') return;
@@ -760,7 +718,7 @@ function gameLoop() {
     const dx = (Math.random() - 0.5) * screenShake;
     const dy = (Math.random() - 0.5) * screenShake;
     ctx.translate(dx, dy);
-    screenShake *= 0.88;
+    screenShake *= 0.85;
     if (screenShake < 0.5) screenShake = 0;
   }
 
@@ -777,7 +735,7 @@ function gameLoop() {
       isHoming = true;
       const interval = score >= 150 
         ? Math.floor(Math.random() * 3) + 2 
-        : Math.floor(Math.random() * 8) + 3;
+        : Math.floor(Math.random() * 7) + 3;
       nextHomingScore = score + interval;
     }
     obstacles.push(new Obstacle(diff.speed, isHoming));
@@ -825,7 +783,7 @@ function gameLoop() {
     if (dist < obs.radius + player.width / 2.2) {
       if (shieldTimer > 0) {
         SoundEngine.playHit();
-        screenShake = 12;
+        screenShake = 10;
         effectParticles.push(new VisualParticles(obs.x, obs.y, 'rgba(91, 140, 255, 0.4)'));
         obstacles.splice(i, 1);
         continue;
@@ -835,7 +793,7 @@ function gameLoop() {
         lives--;
         renderLives();
         SoundEngine.playHit();
-        screenShake = 22;
+        screenShake = 18;
         effectParticles.push(new VisualParticles(player.x, player.y, 'rgba(255, 82, 82, 0.5)'));
         invulnerableTimer = 60;
         obstacles.splice(i, 1);
@@ -943,6 +901,9 @@ function startGame() {
   rainPowerups = [];
   effectParticles = [];
   spawnCounter = 0;
+  
+  W = window.innerWidth || 360;
+  H = window.innerHeight || 640;
   player = new Player();
   initStars();
 
