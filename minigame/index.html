@@ -38,6 +38,29 @@
 
   <div id="gameOverScreen" class="overlay-screen">
     <h1 class="danger">GAME OVER</h1>
+    
+    <div class="stats-display">
+      <div class="stats-row">
+        <span class="stats-label">STAGE SCORE:</span>
+        <span id="finalScoreVal" class="stats-value">0</span>
+      </div>
+      <div class="stats-row">
+        <span class="stats-label">ALL-TIME BEST:</span>
+        <span id="finalHighScoreVal" class="stats-value">0</span>
+      </div>
+    </div>
+
+    <div class="leaderboard-box">
+      <div class="leaderboard-title">TOP 3 PILOTS</div>
+      <div id="leaderboardRows">
+        <div class="loading-text">FETCHING DATA...</div>
+      </div>
+    </div>
+
+    <div class="menu-actions">
+      <button id="restartBtn" class="game-btn primary-btn">PLAY AGAIN</button>
+      <button id="exitBtn" class="game-btn secondary-btn">EXIT TO SITE (5s)</button>
+    </div>
   </div>
 </div>
 
