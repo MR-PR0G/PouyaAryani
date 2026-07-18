@@ -2,7 +2,7 @@ const WORKER_URL = "https://leaderboard-worker.ppouyaaaryani.workers.dev";
 
 let siteMode = "modern";
 let highScore = 0;
-let userCode = "PL-0000";
+let userCode = "PL-" + Math.floor(1000 + Math.random() * 9000);
 
 try {
   siteMode = localStorage.getItem('site_mode') || 'modern';
@@ -10,17 +10,22 @@ try {
   
   let storedCode = localStorage.getItem('minigame_user_code');
   if (!storedCode) {
-    const randNum = Math.floor(1000 + Math.random() * 9000);
-    storedCode = `PL-${randNum}`;
-    localStorage.setItem('minigame_user_code', storedCode);
+    localStorage.setItem('minigame_user_code', userCode);
+  } else {
+    userCode = storedCode;
   }
-  userCode = storedCode;
 } catch (storageError) {
-  console.warn("Storage access is restricted.");
+  console.warn("Storage access is restricted. Using ephemeral ID.");
 }
 
 const identityField = document.getElementById('identityField');
 if (identityField) identityField.textContent = userCode;
+
+const identityFooter = document.getElementById('identityFooter');
+if (identityFooter) {
+  identityFooter.style.zIndex = "999";
+  identityFooter.style.pointerEvents = "none";
+}
 
 const isClassicMode = siteMode === 'classic';
 if (isClassicMode) {
@@ -195,7 +200,7 @@ async function sendTelemetryData(finalScore) {
   if (!WORKER_URL || WORKER_URL.includes("YOUR-WORKER-NAME")) return;
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 2000);
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
 
     const telemetry = {
       score: finalScore,
@@ -205,6 +210,7 @@ async function sendTelemetryData(finalScore) {
 
     await fetch(`${WORKER_URL}/api/save-score`, {
       method: 'POST',
+      mode: 'cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(telemetry),
       signal: controller.signal
@@ -224,9 +230,13 @@ async function fetchAndRenderLeaderboard() {
 
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 2000);
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
 
-    const response = await fetch(`${WORKER_URL}/api/top-scores`, { signal: controller.signal });
+    const response = await fetch(`${WORKER_URL}/api/top-scores`, { 
+      method: 'GET',
+      mode: 'cors',
+      signal: controller.signal 
+    });
     clearTimeout(timeoutId);
 
     if (!response.ok) throw new Error();
