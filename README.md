@@ -2,6 +2,12 @@
 
 A highly performant, modular, and responsive personal portfolio website. Designed with a clean, extensible architecture, this project offers three distinct visual modes, multilingual support, and a hidden easter egg minigame.
 
+<div align="center" style="margin: 20px 0;">
+  <a href="https://mr-pr0g.github.io/PouyaAryani" target="_blank" style="text-decoration: none;">
+    <img src="https://img.shields.io/badge/🚀_LIVE_DEMO-ENTER_PORTFOLIO-4fd8e8?style=for-the-badge&logo=spacex&logoColor=white&labelColor=121624&color=4fd8e8" alt="Live Website">
+  </a>
+</div>
+
 > ⚡ **AI Redesigned & Optimized**  
 > This project has been refined with **AI-driven architectural design**, focusing on high-performance rendering (CSS Hardware Acceleration), sleek glassmorphism aesthetics, and a modular configuration system for seamless updates.
 
@@ -118,4 +124,9 @@ To ensure your project remains stable and performant, please follow these guidel
 **Thank you for your support!** 
 
 Building and maintaining open-source projects takes time and dedication. If you find this portfolio template useful for your own projects, please consider **starring** ⭐ this repository. Your support helps me keep improving this template and adding more cool features. Thank you for being part of the open-source community!
+
+## 🔍 SEO & Personal Metadata
+
+*   **Developer Name:** Pouya Aryani (پویا آریانی)
+*   **Brand / Company:** MR Prog (آقای پروگ)
 
